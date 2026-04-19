@@ -18,6 +18,10 @@
   margin: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
@@ -477,48 +481,6 @@ hr.divider {
   animation: cursorBlink 1s infinite;
   color: var(--primary);
   margin-left: 2px;
-}
-
-/* Marquee Styles */
-.marquee-container {
-  width: 100%;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.02);
-  border-top: 1px solid var(--glass-border);
-  border-bottom: 1px solid var(--glass-border);
-  padding: 1.5rem 0;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-}
-
-.marquee-content {
-  display: flex;
-  width: max-content;
-  animation: marqueeScroll 30s linear infinite;
-}
-
-.marquee-content:hover {
-  animation-play-state: paused;
-}
-
-.marquee-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0 2rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  transition: color 0.3s ease;
-}
-
-.marquee-item:hover {
-  color: #fff;
-}
-
-.marquee-item svg {
-  color: var(--primary);
 }
 
 @media (max-width: 640px) {

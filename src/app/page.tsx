@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main className="container">
       {/* Hero Section */}
-      <section className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center relative" style={{ paddingBottom: '8rem' }}>
+      <section id="about" className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center relative" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
         <ClientTilt className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
           <h1 className="text-5xl font-bold mb-3 animate-title">
             Hi, I'm <span className="shimmer-text">Yash Pratap Singh</span>
@@ -49,31 +49,12 @@ export default function Home() {
             />
           </div>
         </ClientTilt>
-
-        {/* Tech Marquee Layer */}
-        <div className="marquee-container animate-sophisticated delay-4">
-          <div className="marquee-content">
-            {/* Duplicated 3 times to ensure infinite smooth scrolling */}
-            {[...Array(3)].map((_, i) => (
-              <div key={i} style={{ display: 'flex' }}>
-                <span className="marquee-item"><SiNextdotjs /> Next.js</span>
-                <span className="marquee-item"><FaReact /> React</span>
-                <span className="marquee-item"><FaJava /> Java</span>
-                <span className="marquee-item"><SiCplusplus /> C++</span>
-                <span className="marquee-item"><FaSwift /> Swift</span>
-                <span className="marquee-item"><SiMysql /> MySQL</span>
-                <span className="marquee-item"><FaGitAlt /> Git</span>
-                <span className="marquee-item"><FaHtml5 /> HTML5</span>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       <hr className="divider" style={{ marginTop: '0' }} />
 
       {/* Skills Section */}
-      <section className="animate-fade-in delay-1">
+      <section id="skills" className="animate-fade-in delay-1">
         <div className="flex items-center gap-2 mb-8">
           <Code2 className="gradient-text" size={32} />
           <h2 className="text-3xl font-bold">Technical Skills</h2>
@@ -110,7 +91,7 @@ export default function Home() {
       <hr className="divider" />
 
       {/* Projects Section */}
-      <section className="animate-fade-in delay-2">
+      <section id="projects" className="animate-fade-in delay-2">
         <div className="flex items-center gap-2 mb-8">
           <Star className="gradient-text" size={32} />
           <h2 className="text-3xl font-bold">Projects & Achievements</h2>
