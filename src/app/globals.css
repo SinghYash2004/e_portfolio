@@ -75,14 +75,24 @@ a:hover {
 }
 
 .badge {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
-  border-radius: 50px;
-  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.6rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
   font-weight: 500;
-  background: rgba(99, 102, 241, 0.1);
-  color: #a5b4fc;
-  border: 1px solid rgba(99, 102, 241, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.badge svg {
+  color: var(--primary);
+  margin-right: 0.25rem;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 0 5px rgba(99, 102, 241, 0.5));
 }
 
 /* Animations */
@@ -256,9 +266,15 @@ hr.divider {
 .cursor-pointer { cursor: pointer; }
 
 .badge {
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .badge:hover {
-  background: rgba(99, 102, 241, 0.2);
+  background: rgba(99, 102, 241, 0.15);
   border-color: rgba(99, 102, 241, 0.5);
+  color: #fff;
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.25);
+}
+.badge:hover svg {
+  transform: scale(1.2) rotate(10deg);
 }

@@ -59,26 +59,26 @@ export default function Home() {
         <div className="grid grid-cols-2 gap-6">
           <div className="glass-panel">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Monitor size={20} /> Programming Languages</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaJava size={14}/> Java</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><SiCplusplus size={14}/> C++</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><TbLetterC size={16}/> C</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaSwift size={14}/> Swift</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaHtml5 size={14}/> HTML</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaCss3Alt size={14}/> CSS</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaJs size={14}/> JavaScript</span>
+            <div className="flex flex-wrap gap-5">
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJava size={18}/> Java</span>
+              <span className="badge animate-fade-in delay-2 cursor-pointer"><SiCplusplus size={18}/> C++</span>
+              <span className="badge animate-fade-in delay-3 cursor-pointer"><TbLetterC size={20}/> C</span>
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaSwift size={18}/> Swift</span>
+              <span className="badge animate-fade-in delay-2 cursor-pointer"><FaHtml5 size={18}/> HTML</span>
+              <span className="badge animate-fade-in delay-3 cursor-pointer"><FaCss3Alt size={18}/> CSS</span>
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJs size={18}/> JavaScript</span>
             </div>
           </div>
           <div className="glass-panel">
             <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Code2 size={20} /> Tools & Frameworks</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaGitAlt size={14}/> Git</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaDatabase size={14}/> SQL</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><SiMysql size={14}/> MySQL</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaApple size={16}/> SwiftUI</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><SiIntellijidea size={14}/> IntelliJ</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><FaReact size={14}/> React</span>
-              <span className="badge flex items-center gap-1.5 hover:scale-110 transition-transform cursor-pointer"><SiNextdotjs size={14}/> Next.js</span>
+            <div className="flex flex-wrap gap-5">
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaGitAlt size={18}/> Git</span>
+              <span className="badge animate-fade-in delay-2 cursor-pointer"><FaDatabase size={18}/> SQL</span>
+              <span className="badge animate-fade-in delay-3 cursor-pointer"><SiMysql size={18}/> MySQL</span>
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaApple size={20}/> SwiftUI</span>
+              <span className="badge animate-fade-in delay-2 cursor-pointer"><SiIntellijidea size={18}/> IntelliJ</span>
+              <span className="badge animate-fade-in delay-3 cursor-pointer"><FaReact size={18}/> React</span>
+              <span className="badge animate-fade-in delay-1 cursor-pointer"><SiNextdotjs size={18}/> Next.js</span>
             </div>
           </div>
         </div>
