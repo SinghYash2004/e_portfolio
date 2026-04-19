@@ -1,34 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --background: #0f1115;
+  --foreground: #e2e8f0;
+  --primary: #6366f1;
+  --primary-gradient: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --card-bg: #1e2128;
+  --text-muted: #94a3b8;
+  --layout-max-width: 1100px;
 }
 
 * {
@@ -37,13 +18,247 @@ body {
   margin: 0;
 }
 
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(ellipse at top left, rgba(99, 102, 241, 0.15), transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(236, 72, 153, 0.15), transparent 50%);
+  background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  color: #fff;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+a:hover {
+  color: var(--primary);
+}
+
+.container {
+  max-width: var(--layout-max-width);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.glass-panel:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  background: rgba(99, 102, 241, 0.1);
+  color: #a5b4fc;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+/* Section Spacing */
+section {
+  padding: 4rem 0;
+}
+
+/* Typography styles */
+.text-muted { color: var(--text-muted); }
+.font-medium { font-weight: 500; }
+.font-bold { font-weight: 700; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-3xl { font-size: 2rem; }
+.text-4xl { font-size: 2.5rem; }
+.text-primary { color: var(--primary); }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-8 { margin-bottom: 2rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+
+/* Flex rules */
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.gap-8 { gap: 2rem; }
+.flex-wrap { flex-wrap: wrap; }
+.shrink-0 { flex-shrink: 0; }
+
+/* Grid rules */
+.grid { display: grid; }
+.grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+.gap-6 { gap: 1.5rem; }
+
+/* Profile specifics */
+.profile-img-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  padding: 4px;
+  background: var(--primary-gradient);
+}
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--background);
+}
+.shadow-glow {
+  box-shadow: 0 0 25px rgba(99, 102, 241, 0.4);
+}
+
+.hero-section {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+.contact-link:hover {
+  color: #fff;
+}
+.contact-link svg {
+  color: var(--primary);
+}
+
+/* Timeline / lists */
+.timeline {
+  border-left: 2px solid var(--glass-border);
+  padding-left: 1.5rem;
+  margin-left: 1rem;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.85rem;
+  top: 0.25rem;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--primary);
+  box-shadow: 0 0 10px var(--primary);
+}
+
+.list-disc {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}
+.list-disc li {
+  margin-bottom: 0.5rem;
+}
+
+.list-none {
+  list-style: none;
+  padding: 0;
+}
+.space-y-2 > * + * { margin-top: 0.5rem; }
+.space-y-3 > * + * { margin-top: 0.75rem; }
+
+hr.divider {
+  border: none;
+  height: 1px;
+  background: var(--glass-border);
+  margin: 3rem 0;
+}
+
+@media (max-width: 768px) {
+  .hero-flex {
+    flex-direction: column-reverse;
+    text-align: center;
   }
+  .contact-links {
+    justify-content: center;
+  }
+  .grid-cols-2, .grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+  .profile-img-container {
+    margin: 0 auto 2rem;
+  }
+}
+
+.hover\:scale-105:hover { transform: scale(1.05); }
+.hover\:scale-110:hover { transform: scale(1.1); }
+.transition-transform { transition: transform 0.3s ease; }
+.duration-300 { transition-duration: 0.3s; }
+.duration-500 { transition-duration: 0.5s; }
+.cursor-pointer { cursor: pointer; }
+
+.badge {
+  transition: all 0.3s ease;
+}
+.badge:hover {
+  background: rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.5);
 }
