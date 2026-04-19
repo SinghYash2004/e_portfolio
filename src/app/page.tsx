@@ -8,18 +8,18 @@ export default function Home() {
   return (
     <main className="container">
       {/* Hero Section */}
-      <section className="hero-section hero-flex animate-fade-in flex justify-between gap-8 flex-wrap items-center">
-        <div className="glass-panel" style={{ flex: 1, padding: '4rem 3rem' }}>
-          <h1 className="text-4xl font-bold mb-2">
-            Hi, I'm <span className="gradient-text">Yash Pratap Singh</span>
+      <section className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center">
+        <div className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
+          <h1 className="text-5xl font-bold mb-3 animate-title">
+            Hi, I'm <span className="shimmer-text">Yash Pratap Singh</span>
           </h1>
-          <h2 className="text-xl text-muted font-medium mb-4">CSE Engineering Student</h2>
-          <p className="text-muted text-lg" style={{ maxWidth: '600px' }}>
+          <h2 className="text-2xl text-muted font-medium mb-5 animate-sophisticated delay-1">CSE Engineering Student</h2>
+          <p className="text-muted text-lg animate-sophisticated delay-2" style={{ maxWidth: '600px' }}>
             B.Tech Computer Science student with a working knowledge of programming and software development. 
             Passionate about learning new technologies and applying them to develop efficient software solutions.
           </p>
           
-          <div className="contact-links mt-8">
+          <div className="contact-links mt-8 animate-sophisticated delay-3">
             <a href="mailto:ys6463@srmist.edu.in" className="contact-link badge hover:scale-105 transition-transform duration-300">
               <Mail size={16} /> ys6463@srmist.edu.in
             </a>
@@ -35,15 +35,17 @@ export default function Home() {
           </div>
         </div>
         
-        <div className="profile-img-container" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
-          <Image 
-            src="/profile.jpeg" 
-            alt="Yash Pratap Singh" 
-            width={280} 
-            height={280} 
-            className="profile-img shadow-glow hover:scale-105 transition-transform duration-500 cursor-pointer"
-            priority
-          />
+        <div className="profile-img-container animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
+          <div className="animate-float" style={{ width: '100%', height: '100%' }}>
+            <Image 
+              src="/profile.jpeg" 
+              alt="Yash Pratap Singh" 
+              width={280} 
+              height={280} 
+              className="profile-img shadow-glow hover:scale-105 transition-transform duration-500 cursor-pointer"
+              priority
+            />
+          </div>
         </div>
       </section>
 
