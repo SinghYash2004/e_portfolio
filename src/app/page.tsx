@@ -56,28 +56,28 @@ export default function Home() {
           <h2 className="text-3xl font-bold">Technical Skills</h2>
         </div>
         
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-2 gap-16">
           <div className="glass-panel">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Monitor size={20} /> Programming Languages</h3>
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Monitor size={20} /> Programming Languages</h3>
             <div className="flex flex-wrap gap-5">
               <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJava size={18}/> Java</span>
               <span className="badge animate-fade-in delay-2 cursor-pointer"><SiCplusplus size={18}/> C++</span>
               <span className="badge animate-fade-in delay-3 cursor-pointer"><TbLetterC size={20}/> C</span>
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaSwift size={18}/> Swift</span>
-              <span className="badge animate-fade-in delay-2 cursor-pointer"><FaHtml5 size={18}/> HTML</span>
-              <span className="badge animate-fade-in delay-3 cursor-pointer"><FaCss3Alt size={18}/> CSS</span>
+              <span className="badge animate-fade-in delay-4 cursor-pointer"><FaSwift size={18}/> Swift</span>
+              <span className="badge animate-fade-in delay-5 cursor-pointer"><FaHtml5 size={18}/> HTML</span>
+              <span className="badge animate-fade-in delay-6 cursor-pointer"><FaCss3Alt size={18}/> CSS</span>
               <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJs size={18}/> JavaScript</span>
             </div>
           </div>
           <div className="glass-panel">
-            <h3 className="text-xl font-bold mb-4 flex items-center gap-2"><Code2 size={20} /> Tools & Frameworks</h3>
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Code2 size={20} /> Tools & Frameworks</h3>
             <div className="flex flex-wrap gap-5">
               <span className="badge animate-fade-in delay-1 cursor-pointer"><FaGitAlt size={18}/> Git</span>
               <span className="badge animate-fade-in delay-2 cursor-pointer"><FaDatabase size={18}/> SQL</span>
               <span className="badge animate-fade-in delay-3 cursor-pointer"><SiMysql size={18}/> MySQL</span>
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaApple size={20}/> SwiftUI</span>
-              <span className="badge animate-fade-in delay-2 cursor-pointer"><SiIntellijidea size={18}/> IntelliJ</span>
-              <span className="badge animate-fade-in delay-3 cursor-pointer"><FaReact size={18}/> React</span>
+              <span className="badge animate-fade-in delay-4 cursor-pointer"><FaApple size={20}/> SwiftUI</span>
+              <span className="badge animate-fade-in delay-5 cursor-pointer"><SiIntellijidea size={18}/> IntelliJ</span>
+              <span className="badge animate-fade-in delay-6 cursor-pointer"><FaReact size={18}/> React</span>
               <span className="badge animate-fade-in delay-1 cursor-pointer"><SiNextdotjs size={18}/> Next.js</span>
             </div>
           </div>
