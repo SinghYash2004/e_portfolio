@@ -3,17 +3,19 @@ import { Mail, Phone, MapPin, Link as LinkIcon, Code2, Monitor, GraduationCap, A
 import { FaJava, FaHtml5, FaCss3Alt, FaJs, FaSwift, FaGitAlt, FaReact, FaDatabase, FaApple } from "react-icons/fa";
 import { SiCplusplus, SiMysql, SiIntellijidea, SiNextdotjs } from "react-icons/si";
 import { TbLetterC } from "react-icons/tb";
+import Typewriter from "@/components/Typewriter";
+import ClientTilt from "@/components/ClientTilt";
 
 export default function Home() {
   return (
     <main className="container">
       {/* Hero Section */}
-      <section className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center">
-        <div className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
+      <section className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center relative" style={{ paddingBottom: '8rem' }}>
+        <ClientTilt className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
           <h1 className="text-5xl font-bold mb-3 animate-title">
             Hi, I'm <span className="shimmer-text">Yash Pratap Singh</span>
           </h1>
-          <h2 className="text-2xl text-muted font-medium mb-5 animate-sophisticated delay-1">CSE Engineering Student</h2>
+          <Typewriter />
           <p className="text-muted text-lg animate-sophisticated delay-2" style={{ maxWidth: '600px' }}>
             B.Tech Computer Science student with a working knowledge of programming and software development. 
             Passionate about learning new technologies and applying them to develop efficient software solutions.
@@ -33,9 +35,9 @@ export default function Home() {
               <LinkIcon size={16} /> LinkedIn
             </a>
           </div>
-        </div>
+        </ClientTilt>
         
-        <div className="profile-img-container animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
+        <ClientTilt className="profile-img-container animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
           <div className="animate-float" style={{ width: '100%', height: '100%' }}>
             <Image 
               src="/profile.jpeg" 
@@ -46,10 +48,29 @@ export default function Home() {
               priority
             />
           </div>
+        </ClientTilt>
+
+        {/* Tech Marquee Layer */}
+        <div className="marquee-container animate-sophisticated delay-4">
+          <div className="marquee-content">
+            {/* Duplicated 3 times to ensure infinite smooth scrolling */}
+            {[...Array(3)].map((_, i) => (
+              <div key={i} style={{ display: 'flex' }}>
+                <span className="marquee-item"><SiNextdotjs /> Next.js</span>
+                <span className="marquee-item"><FaReact /> React</span>
+                <span className="marquee-item"><FaJava /> Java</span>
+                <span className="marquee-item"><SiCplusplus /> C++</span>
+                <span className="marquee-item"><FaSwift /> Swift</span>
+                <span className="marquee-item"><SiMysql /> MySQL</span>
+                <span className="marquee-item"><FaGitAlt /> Git</span>
+                <span className="marquee-item"><FaHtml5 /> HTML5</span>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      <hr className="divider" />
+      <hr className="divider" style={{ marginTop: '0' }} />
 
       {/* Skills Section */}
       <section className="animate-fade-in delay-1">
