@@ -5,6 +5,7 @@ import { SiCplusplus, SiMysql, SiIntellijidea, SiNextdotjs } from "react-icons/s
 import { TbLetterC } from "react-icons/tb";
 import Typewriter from "@/components/Typewriter";
 import ClientTilt from "@/components/ClientTilt";
+import SkillOrbit from "@/components/SkillOrbit";
 
 export default function Home() {
   return (
@@ -55,36 +56,43 @@ export default function Home() {
 
       {/* Skills Section */}
       <section id="skills" className="animate-fade-in delay-1">
-        <div className="flex items-center gap-2 mb-8">
+        <div className="flex items-center gap-2 mb-12">
           <Code2 className="gradient-text" size={32} />
           <h2 className="text-3xl font-bold">Technical Skills</h2>
         </div>
         
-        <div className="grid grid-cols-2 gap-16">
-          <div className="glass-panel">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Monitor size={20} /> Programming Languages</h3>
-            <div className="flex flex-wrap gap-5">
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJava size={18}/> Java</span>
-              <span className="badge animate-fade-in delay-2 cursor-pointer"><SiCplusplus size={18}/> C++</span>
-              <span className="badge animate-fade-in delay-3 cursor-pointer"><TbLetterC size={20}/> C</span>
-              <span className="badge animate-fade-in delay-4 cursor-pointer"><FaSwift size={18}/> Swift</span>
-              <span className="badge animate-fade-in delay-5 cursor-pointer"><FaHtml5 size={18}/> HTML</span>
-              <span className="badge animate-fade-in delay-6 cursor-pointer"><FaCss3Alt size={18}/> CSS</span>
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaJs size={18}/> JavaScript</span>
-            </div>
-          </div>
-          <div className="glass-panel">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-2"><Code2 size={20} /> Tools & Frameworks</h3>
-            <div className="flex flex-wrap gap-5">
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><FaGitAlt size={18}/> Git</span>
-              <span className="badge animate-fade-in delay-2 cursor-pointer"><FaDatabase size={18}/> SQL</span>
-              <span className="badge animate-fade-in delay-3 cursor-pointer"><SiMysql size={18}/> MySQL</span>
-              <span className="badge animate-fade-in delay-4 cursor-pointer"><FaApple size={20}/> SwiftUI</span>
-              <span className="badge animate-fade-in delay-5 cursor-pointer"><SiIntellijidea size={18}/> IntelliJ</span>
-              <span className="badge animate-fade-in delay-6 cursor-pointer"><FaReact size={18}/> React</span>
-              <span className="badge animate-fade-in delay-1 cursor-pointer"><SiNextdotjs size={18}/> Next.js</span>
-            </div>
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <SkillOrbit 
+            title="Programming Languages" 
+            centerIcon={Monitor} 
+            skills={[
+              { icon: FaJava, name: "Java" },
+              { icon: SiCplusplus, name: "C++" },
+              { icon: TbLetterC, name: "C" },
+              { icon: FaSwift, name: "Swift" },
+              { icon: FaHtml5, name: "HTML" },
+              { icon: FaCss3Alt, name: "CSS" },
+              { icon: FaJs, name: "JavaScript" },
+            ]} 
+            radius={200}
+            rotationDuration={35}
+          />
+          
+          <SkillOrbit 
+            title="Tools & Frameworks" 
+            centerIcon={Code2} 
+            skills={[
+              { icon: FaGitAlt, name: "Git" },
+              { icon: FaDatabase, name: "SQL" },
+              { icon: SiMysql, name: "MySQL" },
+              { icon: FaApple, name: "SwiftUI" },
+              { icon: SiIntellijidea, name: "IntelliJ" },
+              { icon: FaReact, name: "React" },
+              { icon: SiNextdotjs, name: "Next.js" },
+            ]} 
+            radius={200}
+            rotationDuration={45}
+          />
         </div>
       </section>
 
