@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import { Mail, Phone, MapPin, Link as LinkIcon, Code2, Monitor, GraduationCap, Award, BookOpen, Star, ChevronRight, CheckCircle2 } from "lucide-react";
 import { FaJava, FaHtml5, FaCss3Alt, FaJs, FaSwift, FaGitAlt, FaReact, FaDatabase, FaApple } from "react-icons/fa";
@@ -64,32 +66,16 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <SkillOrbit 
             title="Programming Languages" 
-            centerIcon={Monitor} 
-            skills={[
-              { icon: FaJava, name: "Java" },
-              { icon: SiCplusplus, name: "C++" },
-              { icon: TbLetterC, name: "C" },
-              { icon: FaSwift, name: "Swift" },
-              { icon: FaHtml5, name: "HTML" },
-              { icon: FaCss3Alt, name: "CSS" },
-              { icon: FaJs, name: "JavaScript" },
-            ]} 
+            centerIconName="Monitor" 
+            skills={["Java", "C++", "C", "Swift", "HTML", "CSS", "JavaScript"]} 
             radius={200}
             rotationDuration={35}
           />
           
           <SkillOrbit 
             title="Tools & Frameworks" 
-            centerIcon={Code2} 
-            skills={[
-              { icon: FaGitAlt, name: "Git" },
-              { icon: FaDatabase, name: "SQL" },
-              { icon: SiMysql, name: "MySQL" },
-              { icon: FaApple, name: "SwiftUI" },
-              { icon: SiIntellijidea, name: "IntelliJ" },
-              { icon: FaReact, name: "React" },
-              { icon: SiNextdotjs, name: "Next.js" },
-            ]} 
+            centerIconName="Code2" 
+            skills={["Git", "SQL", "MySQL", "SwiftUI", "IntelliJ", "React", "Next.js"]} 
             radius={200}
             rotationDuration={45}
           />
