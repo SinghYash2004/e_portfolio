@@ -1,12 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const ROLES = [
-  "CSE Engineering Student",
-  "Full-Stack Developer",
-  "Software Engineer",
-  "Problem Solver",
+  "Systems Programmer",
+  "IEEE Published Researcher",
+  "Web Developer",
+  "CS Student",
 ];
 
 export default function Typewriter() {
@@ -18,22 +19,18 @@ export default function Typewriter() {
     let timer: NodeJS.Timeout;
     const fullText = ROLES[currentRoleIndex];
     
-    // Determine typing speed based on state
-    let speed = isDeleting ? 40 : 100;
+    let speed = isDeleting ? 30 : 80;
     
-    // Pause briefly when word is fully typed
     if (!isDeleting && currentText === fullText) {
-      speed = 2000;
+      speed = 2500;
       timer = setTimeout(() => setIsDeleting(true), speed);
     } 
-    // Move to next word when completely deleted
     else if (isDeleting && currentText === "") {
       setIsDeleting(false);
       setCurrentRoleIndex((prev) => (prev + 1) % ROLES.length);
-      speed = 400; // brief pause before typing next word
+      speed = 400;
       timer = setTimeout(() => {}, speed);
     }
-    // Typing or Deleting
     else {
       timer = setTimeout(() => {
         setCurrentText(
@@ -48,11 +45,16 @@ export default function Typewriter() {
   }, [currentText, isDeleting, currentRoleIndex]);
 
   return (
-    <div className="typewriter-container h-8 mb-5 animate-sophisticated delay-1">
-      <h2 className="text-2xl text-muted font-medium inline-block">
+    <div className="h-10 mb-8 overflow-hidden">
+      <h3 className="text-xl md:text-2xl text-[#00d4aa] font-medium mono-font tracking-tight flex items-center">
+        <span className="opacity-70 mr-2">&gt;</span>
         {currentText}
-        <span className="cursor-blink">|</span>
-      </h2>
+        <motion.span 
+          animate={{ opacity: [1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
+          className="ml-1 w-2 h-6 bg-[#00d4aa]/50"
+        />
+      </h3>
     </div>
   );
 }

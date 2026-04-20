@@ -1,170 +1,228 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
-import { Mail, Phone, MapPin, Link as LinkIcon, Code2, Monitor, GraduationCap, Award, BookOpen, Star, ChevronRight, CheckCircle2, Zap } from "lucide-react";
-import { FaJava, FaHtml5, FaCss3Alt, FaJs, FaSwift, FaGitAlt, FaReact, FaDatabase, FaApple } from "react-icons/fa";
-import { SiCplusplus, SiMysql, SiIntellijidea, SiNextdotjs } from "react-icons/si";
-import { TbLetterC } from "react-icons/tb";
+import { motion } from "framer-motion";
+import { 
+  Mail, Phone, MapPin, Linkedin, 
+  Github, ExternalLink, ArrowRight,
+  MousePointer2, Sparkles, Code2
+} from "lucide-react";
+
 import Typewriter from "@/components/Typewriter";
+import TechSkills from "@/components/TechSkills";
+import ProjectCard from "@/components/ProjectCard";
+import Timeline from "@/components/Timeline";
 import ClientTilt from "@/components/ClientTilt";
 
-import TechSkills from "@/components/TechSkills";
-
 export default function Home() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } 
+    },
+  };
+
   return (
-    <main className="container">
-      {/* Hero Section */}
-      <section id="about" className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center relative" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
-        <ClientTilt className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
-          <h1 className="text-5xl font-bold mb-3 animate-title">
-            Hi, I'm <span className="shimmer-text">Yash Pratap Singh</span>
-          </h1>
-          <Typewriter />
-          <p className="text-muted text-lg animate-sophisticated delay-2" style={{ maxWidth: '600px' }}>
-            B.Tech Computer Science student with a working knowledge of programming and software development. 
-            Passionate about learning new technologies and applying them to develop efficient software solutions.
-          </p>
-          
-          <div className="contact-links mt-8 animate-sophisticated delay-3">
-            <a href="mailto:ys6463@srmist.edu.in" className="contact-link badge hover:scale-105 transition-transform duration-300">
-              <Mail size={16} /> ys6463@srmist.edu.in
-            </a>
-            <span className="contact-link badge hover:scale-105 transition-transform duration-300">
-              <Phone size={16} /> +91-7061293059
-            </span>
-            <span className="contact-link badge hover:scale-105 transition-transform duration-300">
-              <MapPin size={16} /> Tiruchirappalli, TN, India
-            </span>
-            <a href="https://linkedin.com/in/yash-pratap-singh-b43925327/" target="_blank" rel="noreferrer" className="contact-link badge hover:scale-105 transition-transform duration-300">
-              <LinkIcon size={16} /> LinkedIn
-            </a>
+    <main className="relative min-h-screen">
+      {/* Global Ambient Background */}
+      <div className="ambient-container">
+        <div className="blob blob-1" />
+        <div className="blob blob-2" />
+      </div>
+
+      <div className="container relative z-10">
+        {/* --- HERO SECTION --- */}
+        <section id="about" className="min-h-screen flex flex-col justify-center py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-12 items-center">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={containerVariants}
+              className="flex flex-col"
+            >
+              <motion.div variants={itemVariants} className="flex items-center gap-2 mb-6 text-[#00d4aa] mono-font text-sm font-bold tracking-widest uppercase">
+                <Sparkles size={16} /> <span>Available for Internships</span>
+              </motion.div>
+
+              <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-bold display-font leading-[1.1] mb-6">
+                Redefining the <br /> 
+                <span className="gradient-text">Digital Frontier.</span>
+              </motion.h1>
+
+              <motion.div variants={itemVariants}>
+                <Typewriter />
+              </motion.div>
+
+              <motion.p variants={itemVariants} className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-2xl mb-10">
+                First-year CS student at SRMIST with an IEEE-published paper already under his belt. 
+                I architect systems, build for the web, and write code that performs — and I&apos;m just getting started.
+              </motion.p>
+
+              <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+                <a href="#projects" className="cta-button cta-primary group flex items-center gap-2">
+                  View My Work <ArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a href="#contact" className="cta-button cta-secondary">
+                  Get In Touch
+                </a>
+              </motion.div>
+
+              <motion.div variants={itemVariants} className="flex gap-8 mt-12 pt-12 border-t border-white/5">
+                {[
+                  { icon: Mail, label: "Email", href: "mailto:ys6463@srmist.edu.in" },
+                  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/yash-pratap-singh-b43925327/" },
+                  { icon: Github, label: "GitHub", href: "https://github.com" },
+                ].map((social) => (
+                  <a 
+                    key={social.label} 
+                    href={social.href} 
+                    target="_blank" 
+                    rel="noreferrer"
+                    className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-[#00d4aa] transition-colors"
+                  >
+                    <social.icon size={16} /> {social.label}
+                  </a>
+                ))}
+              </motion.div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="flex justify-center lg:justify-end"
+            >
+              <ClientTilt className="relative w-[320px] h-[320px] md:w-[420px] md:h-[420px]">
+                <div className="absolute inset-0 rounded-full border border-[#00d4aa]/20 p-4 animate-pulse">
+                  <div className="w-full h-full rounded-full border border-[#00d4aa]/40 p-4">
+                    <div className="w-full h-full rounded-full border border-[#00d4aa]/60 overflow-hidden shadow-[0_0_50px_rgba(0,212,170,0.2)]">
+                      <Image 
+                        src="/profile.jpeg" 
+                        alt="Yash Pratap Singh" 
+                        fill
+                        className="object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* Floating Elements */}
+                <div className="absolute -top-4 -right-4 w-12 h-12 glass-card rounded-xl flex items-center justify-center text-[#00d4aa] rotate-12">
+                  <Code2 size={24} />
+                </div>
+              </ClientTilt>
+            </motion.div>
           </div>
-        </ClientTilt>
-        
-        <ClientTilt className="profile-img-container animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
-          <div className="animate-float" style={{ width: '100%', height: '100%' }}>
-            <Image 
-              src="/profile.jpeg" 
-              alt="Yash Pratap Singh" 
-              width={280} 
-              height={280} 
-              className="profile-img shadow-glow hover:scale-105 transition-transform duration-500 cursor-pointer"
-              priority
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2 }}
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+            <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-gray-500">Scroll</span>
+            <div className="w-[1px] h-12 bg-gradient-to-b from-[#00d4aa] to-transparent animate-bounce" />
+          </motion.div>
+        </section>
+
+        {/* --- SKILLS SECTION --- */}
+        <section id="skills" className="section-padding">
+          <div className="flex flex-col items-center text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold display-font mb-4">Mastered <span className="text-[#00d4aa]">Stack.</span></h2>
+            <div className="w-20 h-[2px] bg-[#00d4aa]" />
+          </div>
+          <TechSkills />
+        </section>
+
+        <div className="divider" />
+
+        {/* --- PROJECTS SECTION --- */}
+        <section id="projects" className="section-padding">
+          <div className="flex justify-between items-end mb-16">
+            <div>
+              <h2 className="text-4xl md:text-6xl font-bold display-font mb-4">Inception to <span className="text-[#00d4aa]">Execution.</span></h2>
+              <p className="text-gray-500 max-w-md">Highlighting key architectural feats and research contributions.</p>
+            </div>
+            <div className="hidden md:block w-32 h-[2px] bg-white/5 mb-8" />
+          </div>
+
+          <div className="flex flex-col gap-8">
+            <ProjectCard 
+              title="Multithreaded Web Server"
+              description="Architected a high-performance multithreaded HTTP server in C++ using POSIX sockets, capable of handling concurrent static content requests with a priority-based thread pool and load-balanced task queue. Research published and presented at IEEE ICAECT 2026."
+              tags={["C++", "POSIX", "IEEE Paper", "Multithreading"]}
+              isIEEE
+              links={{ github: "#" }}
+            />
+            <ProjectCard 
+              title="Intelligent Academic ERP"
+              description="Designing an intelligent academic ERP prototype that fuses relational database architecture, constraint-based scheduling algorithms, and ML-driven prediction models to automate conflict-free timetabling and forecast resource utilization."
+              tags={["Algorithm Design", "ML", "ERP Architecture", "Next.js"]}
+              links={{ github: "#" }}
             />
           </div>
-        </ClientTilt>
-      </section>
+        </section>
 
-      <hr className="divider" style={{ marginTop: '0' }} />
+        <div className="divider" />
 
-      {/* Skills Section */}
-      <section id="skills" className="animate-fade-in delay-1">
-        <TechSkills />
-      </section>
-
-      <hr className="divider" />
-
-      {/* Projects Section */}
-      <section id="projects" className="animate-fade-in delay-2">
-        <div className="flex items-center gap-2 mb-8">
-          <Star className="gradient-text" size={32} />
-          <h2 className="text-3xl font-bold">Projects & Achievements</h2>
-        </div>
-        
-        <div className="timeline">
-          <div className="timeline-item glass-panel">
-            <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold">Compact Multithreaded Web Server</h3>
-              <span className="text-muted">2025</span>
-            </div>
-            <p className="text-sm text-primary mb-4 font-medium">C++ | Socket Programming | Multithreading | Thread Pool | TCP</p>
-            <ul className="list-none flex flex-col gap-3 text-muted">
-              <li className="flex gap-2 items-start"><ChevronRight className="text-primary mt-1 shrink-0" size={16} /> <span>Developed a lightweight multithreaded HTTP web server in C++ using POSIX sockets to handle concurrent static content requests. Implemented a priority-based thread pool and load-balanced task queue to improve request scheduling and overall server efficiency.</span></li>
-              <li className="flex gap-2 items-start"><ChevronRight className="text-primary mt-1 shrink-0" size={16} /> <span>Presented the paper &quot;Compact Multithreaded Web Server for Static Request Handling&quot; at the IEEE-sponsored ICAECT 2026 international conference. The work demonstrates a C++ multithreaded server architecture for efficient concurrent HTTP request handling.</span></li>
-            </ul>
+        {/* --- EDUCATION SECTION --- */}
+        <section id="education" className="section-padding">
+           <div className="flex flex-col items-center text-center mb-16">
+            <h2 className="text-4xl md:text-6xl font-bold display-font mb-4">Academic <span className="text-[#00d4aa]">Odyssey.</span></h2>
+            <div className="w-20 h-[2px] bg-[#00d4aa]" />
           </div>
+          <Timeline />
+        </section>
 
-          <div className="timeline-item glass-panel">
-            <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold">Intelligent Academic ERP System</h3>
-              <span className="text-muted">2026</span>
-            </div>
-            <p className="text-sm text-primary mb-4 font-medium">DBMS | Algorithm Design | ERP Architecture</p>
-            <p className="text-muted">
-              Developing an academic prototype that integrates relational database design, scheduling algorithms, and machine learning models to generate conflict-free timetables, predict resource utilization, and support data-driven academic planning.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <hr className="divider" />
-
-      {/* Education & Coursework */}
-      <section className="animate-fade-in delay-3">
-        <div className="grid grid-cols-2 gap-8">
-          
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <GraduationCap className="gradient-text" size={28} />
-              <h2 className="text-2xl font-bold">Education</h2>
-            </div>
-            <div className="timeline">
-              <div className="timeline-item">
-                <h3 className="text-lg font-bold">Bachelor of Technology in Computer Science</h3>
-                <p className="text-muted font-medium">SRM Institute of Science and Technology (SRMIST)</p>
-                <p className="text-sm text-muted">07/2024 - 07/2028 | Trichy, India</p>
+        {/* --- CONTACT SECTION --- */}
+        <section id="contact" className="section-padding mb-20">
+          <div className="glass-card rounded-[40px] p-12 md:p-20 text-center relative overflow-hidden">
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="flex items-center gap-2 mb-6 px-4 py-1.5 rounded-full bg-[#00d4aa]/10 border border-[#00d4aa]/20">
+                <span className="w-2 h-2 rounded-full bg-[#00d4aa] animate-ping" />
+                <span className="text-[10px] font-bold text-[#00d4aa] uppercase tracking-widest">Open to New Opportunities</span>
               </div>
-              <div className="timeline-item">
-                <h3 className="text-lg font-bold">Senior School Certificate (SSC)</h3>
-                <p className="text-muted font-medium">Vatayan School, Bihar</p>
-                <p className="text-sm text-muted">2021 - 2023 | Siwan, India</p>
-              </div>
-              <div className="timeline-item">
-                <h3 className="text-lg font-bold">Indian Certificate of Secondary Education</h3>
-                <p className="text-muted font-medium">Narayana School</p>
-                <p className="text-sm text-muted">2016 - 2021 | Howrah, India</p>
-              </div>
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 mb-6">
-              <BookOpen className="gradient-text" size={28} />
-              <h2 className="text-2xl font-bold">Relevant Coursework</h2>
-            </div>
-            <div className="glass-panel">
-              <div className="flex flex-wrap gap-2">
-                <span className="badge">Data Structures & Algorithms</span>
-                <span className="badge">Operating Systems</span>
-                <span className="badge">Database Management (DBMS)</span>
-                <span className="badge">Object-Oriented Programming</span>
-                <span className="badge">Algorithm Design</span>
-                <span className="badge">Computer Organization</span>
-                <span className="badge">System Programming</span>
+              
+              <h2 className="text-5xl md:text-7xl font-bold display-font mb-8">Let&apos;s Build the <span className="gradient-text">Future.</span></h2>
+              <p className="text-gray-400 max-w-lg mb-12">I&apos;m always interested in hearing about new projects, research collaboration, or just a friendly chat about systems architecture.</p>
+              
+              <div className="flex flex-wrap justify-center gap-6">
+                <a href="mailto:ys6463@srmist.edu.in" className="px-8 py-4 rounded-2xl bg-white text-black font-bold hover:scale-105 transition-transform flex items-center gap-2">
+                  <Mail size={20} /> Send an Email
+                </a>
+                <a href="https://linkedin.com/in/yash-pratap-singh-b43925327/" target="_blank" rel="noreferrer" className="px-8 py-4 rounded-2xl border border-white/20 text-white font-bold hover:bg-white/5 transition-all flex items-center gap-2">
+                  <Linkedin size={20} /> LinkedIn
+                </a>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 mb-6 mt-8">
-              <Award className="gradient-text" size={28} />
-              <h2 className="text-2xl font-bold">Certifications</h2>
-            </div>
-            <ul className="list-none flex flex-col gap-3 text-sm">
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Research Paper Presentation (ICAECT 2026)</strong> - IEEE Sponsored Conference</span></li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Intro to Computer Organization</strong> - IIIT Hyderabad</span></li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Web Security & Social Engineering</strong> - Packt</span></li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Analysis of Algorithm</strong></span></li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Data Science Math Skills</strong></span></li>
-              <li className="flex items-center gap-2"><CheckCircle2 className="text-primary" size={16} /> <span><strong>Sustainable Development in the 21st Century</strong> - Ban Ki-moon</span></li>
-            </ul>
+            {/* Background Accent */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#00d4aa]/5 blur-[120px] rounded-full pointer-events-none" />
           </div>
-          
-        </div>
-      </section>
-      
-      <footer className="text-center py-8 text-sm text-muted">
-        <p>© 2024 Yash Pratap Singh. Built with Next.js.</p>
-      </footer>
+        </section>
+
+        <footer className="py-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 opacity-50">
+          <p className="text-xs font-medium uppercase tracking-[0.2em]">&copy; 2026 Yash Pratap Singh. Engineered for Performance.</p>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-white transition-colors"><MousePointer2 size={16} /></a>
+            <a href="#" className="hover:text-white transition-colors"><Linkedin size={16} /></a>
+            <a href="#" className="hover:text-white transition-colors"><Github size={16} /></a>
+          </div>
+        </footer>
+      </div>
     </main>
   );
 }
