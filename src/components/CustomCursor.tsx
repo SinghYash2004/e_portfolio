@@ -1,41 +1,51 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useSpring } from "framer-motion";
 
 export default function CustomCursor() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
-  
-  const mouseX = useSpring(0, { stiffness: 500, damping: 50 });
-  const mouseY = useSpring(0, { stiffness: 500, damping: 50 });
 
   useEffect(() => {
+    // Check if device supports hover (desktop vs mobile)
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
     
     if (mediaQuery.matches) {
       setIsVisible(true);
       
       const onMouseMove = (e: MouseEvent) => {
-        mouseX.set(e.clientX);
-        mouseY.set(e.clientY);
+        // Use requestAnimationFrame for smoother performance
+        requestAnimationFrame(() => {
+          setPosition({ x: e.clientX, y: e.clientY });
+        });
       };
       
+      const onMouseLeave = () => setIsVisible(false);
+      const onMouseEnter = () => setIsVisible(true);
+
       document.addEventListener("mousemove", onMouseMove);
-      return () => document.removeEventListener("mousemove", onMouseMove);
+      document.body.addEventListener("mouseleave", onMouseLeave);
+      document.body.addEventListener("mouseenter", onMouseEnter);
+
+      return () => {
+        document.removeEventListener("mousemove", onMouseMove);
+        document.body.removeEventListener("mouseleave", onMouseLeave);
+        document.body.removeEventListener("mouseenter", onMouseEnter);
+      };
     }
-  }, [mouseX, mouseY]);
+  }, []);
 
   if (!isVisible) return null;
 
   return (
-    <motion.div
+    <div
+      className="custom-cursor"
       style={{
-        x: mouseX,
-        y: mouseY,
-        translateX: "-50%",
-        translateY: "-50%",
+        left: `${position.x}px`,
+        top: `${position.y}px`,
       }}
-      className="cursor-dot"
-    />
+    >
+      <div className="custom-cursor-glow" />
+    </div>
   );
 }

@@ -1,13 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 
 const ROLES = [
-  "Systems Programmer",
-  "IEEE Published Researcher",
-  "Web Developer",
-  "CS Student",
+  "CSE Engineering Student",
+  "Full-Stack Developer",
+  "Software Engineer",
+  "Problem Solver",
 ];
 
 export default function Typewriter() {
@@ -19,18 +18,22 @@ export default function Typewriter() {
     let timer: NodeJS.Timeout;
     const fullText = ROLES[currentRoleIndex];
     
-    let speed = isDeleting ? 30 : 80;
+    // Determine typing speed based on state
+    let speed = isDeleting ? 40 : 100;
     
+    // Pause briefly when word is fully typed
     if (!isDeleting && currentText === fullText) {
-      speed = 2500;
+      speed = 2000;
       timer = setTimeout(() => setIsDeleting(true), speed);
     } 
+    // Move to next word when completely deleted
     else if (isDeleting && currentText === "") {
       setIsDeleting(false);
       setCurrentRoleIndex((prev) => (prev + 1) % ROLES.length);
-      speed = 400;
+      speed = 400; // brief pause before typing next word
       timer = setTimeout(() => {}, speed);
     }
+    // Typing or Deleting
     else {
       timer = setTimeout(() => {
         setCurrentText(
@@ -45,16 +48,11 @@ export default function Typewriter() {
   }, [currentText, isDeleting, currentRoleIndex]);
 
   return (
-    <div className="h-10 mb-8 overflow-hidden">
-      <h3 className="text-xl md:text-2xl text-[#00d4aa] font-medium mono-font tracking-tight flex items-center">
-        <span className="opacity-70 mr-2">&gt;</span>
+    <div className="typewriter-container h-8 mb-5 animate-sophisticated delay-1">
+      <h2 className="text-2xl text-muted font-medium inline-block">
         {currentText}
-        <motion.span 
-          animate={{ opacity: [1, 0] }}
-          transition={{ duration: 0.8, repeat: Infinity, ease: "steps(2)" }}
-          className="ml-1 w-2 h-6 bg-[#00d4aa]/50"
-        />
-      </h3>
+        <span className="cursor-blink">|</span>
+      </h2>
     </div>
   );
 }

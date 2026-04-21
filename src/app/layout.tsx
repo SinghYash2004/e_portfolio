@@ -1,28 +1,22 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Sora, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
 
-const dmSerif = DM_Serif_Display({
-  weight: "400",
-  variable: "--font-display",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const sora = Sora({
-  variable: "--font-body",
-  subsets: ["latin"],
-});
-
-const jetbrains = JetBrains_Mono({
-  variable: "--font-mono",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Yash Pratap Singh | Systems Engineer & Researcher",
-  description: "E-Portfolio of Yash Pratap Singh, Computer Science Engineering Student at SRMIST.",
+  title: "Yash Pratap Singh | Portfolio",
+  description: "E-Portfolio of Yash Pratap Singh, Computer Science Engineering Student.",
 };
 
 export default function RootLayout({
@@ -31,8 +25,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSerif.variable} ${sora.variable} ${jetbrains.variable}`}>
-      <body className="font-body antialiased selection:bg-teal-500/30">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <body>
         <CustomCursor />
         <NavBar />
         {children}
