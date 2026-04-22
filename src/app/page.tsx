@@ -8,6 +8,8 @@ import {
   MapPin,
   Link as LinkIcon,
   Download,
+  Github,
+  ExternalLink,
   GraduationCap,
   Award,
   BookOpen,
@@ -178,6 +180,26 @@ export default function Home() {
                 </span>
               </li>
             </ul>
+            <div className="flex flex-wrap gap-2 mt-4">
+              <a
+                href="https://github.com/SinghYash2004/multi_threaded_web_server.git"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-resume"
+              >
+                <Github size={14} />
+                View Code
+              </a>
+              <a
+                href="https://ieeexplore.ieee.org/document/11426147"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-resume"
+              >
+                <ExternalLink size={14} />
+                Research Paper
+              </a>
+            </div>
           </div>
 
           <div className="timeline-item glass-panel project-card-enhanced reveal">
@@ -197,6 +219,17 @@ export default function Home() {
               scheduling algorithms, and machine learning models to generate conflict-free
               timetables, predict resource utilization, and support data-driven academic planning.
             </p>
+            <div className="flex flex-wrap gap-2 mt-4">
+              <a
+                href="https://github.com/SinghYash2004/TimeTableGenerator.git"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-resume"
+              >
+                <Github size={14} />
+                View Code
+              </a>
+            </div>
           </div>
         </div>
       </section>
@@ -262,7 +295,11 @@ export default function Home() {
             >
               <div className="cert-card-styled reveal" style={revealStyle(0)}>
                 <div className="cert-name">Research Paper Presentation (ICAECT 2026)</div>
-                <div className="cert-issuer">IEEE Sponsored Conference</div>
+                <div className="cert-issuer">
+                  <a href="https://ieeexplore.ieee.org/document/11426147" target="_blank" rel="noreferrer">
+                    IEEE Sponsored Conference
+                  </a>
+                </div>
               </div>
               <div className="cert-card-styled reveal" style={revealStyle(1)}>
                 <div className="cert-name">Intro to Computer Organization</div>
