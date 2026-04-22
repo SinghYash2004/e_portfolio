@@ -48,9 +48,13 @@ const tools: Skill[] = [
 
 const hexToRgba = (hex: string, alpha: number) => {
   const normalized = hex.replace('#', '');
-  const safeHex = normalized.length === 3
-    ? normalized.split('').map((char) => char + char).join('')
-    : normalized;
+  const safeHex =
+    normalized.length === 3
+      ? normalized
+          .split('')
+          .map((char) => char + char)
+          .join('')
+      : normalized;
 
   const r = parseInt(safeHex.slice(0, 2), 16);
   const g = parseInt(safeHex.slice(2, 4), 16);
@@ -115,7 +119,7 @@ export default function TechnicalSkills() {
 
   return (
     <div className="skills-root">
-      <style jsx>{`
+      <style jsx global>{`
         .skills-root {
           background: #080b18;
           border-radius: 24px;
@@ -228,6 +232,8 @@ export default function TechnicalSkills() {
         }
 
         .skill-row {
+          appearance: none;
+          -webkit-appearance: none;
           display: flex;
           align-items: center;
           gap: 10px;
@@ -239,6 +245,7 @@ export default function TechnicalSkills() {
           color: inherit;
           cursor: pointer;
           text-align: left;
+          font: inherit;
           transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
         }
 

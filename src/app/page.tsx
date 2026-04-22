@@ -2,13 +2,13 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { FaGithub } from "react-icons/fa";
 import {
   Mail,
   Phone,
   MapPin,
   Link as LinkIcon,
   Download,
-  Github,
   ExternalLink,
   GraduationCap,
   Award,
@@ -107,15 +107,12 @@ export default function Home() {
               className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
               style={revealStyle(4)}
             >
-              <Github size={16} /> GitHub
+              <FaGithub size={16} /> GitHub
             </a>
           </div>
-          <a
-            href="mailto:ys6463@srmist.edu.in?subject=Resume%20Request%20from%20Portfolio"
-            className="btn-resume mt-4"
-          >
+          <a href="/resume.pdf" download className="btn-resume mt-4">
             <Download size={14} />
-            Request Resume
+            Download Resume
           </a>
         </ClientTilt>
 
@@ -196,7 +193,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="btn-resume"
               >
-                <Github size={14} />
+                <FaGithub size={14} />
                 View Code
               </a>
               <a
@@ -235,7 +232,7 @@ export default function Home() {
                 rel="noreferrer"
                 className="btn-resume"
               >
-                <Github size={14} />
+                <FaGithub size={14} />
                 View Code
               </a>
             </div>
