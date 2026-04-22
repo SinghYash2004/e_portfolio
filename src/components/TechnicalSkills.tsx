@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { IconType } from 'react-icons';
 import {
@@ -30,6 +30,7 @@ type SkillCardProps = {
   label: string;
   skills: Skill[];
   activeSkill: string | null;
+  displayPercents: Record<string, number>;
   onSelect: (skillName: string) => void;
 };
 
@@ -74,7 +75,14 @@ const hexToRgba = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-function SkillCard({ icon: HeaderIcon, label, skills, activeSkill, onSelect }: SkillCardProps) {
+function SkillCard({
+  icon: HeaderIcon,
+  label,
+  skills,
+  activeSkill,
+  displayPercents,
+  onSelect,
+}: SkillCardProps) {
   return (
     <div className="section-card">
       <div className="card-header">
@@ -115,7 +123,7 @@ function SkillCard({ icon: HeaderIcon, label, skills, activeSkill, onSelect }: S
               </div>
 
               <span className="percent-label" style={{ color: skill.color }}>
-                {skill.percent}%
+                {displayPercents[skill.name] ?? 0}%
               </span>
             </button>
           );
@@ -126,10 +134,66 @@ function SkillCard({ icon: HeaderIcon, label, skills, activeSkill, onSelect }: S
 }
 
 export default function TechnicalSkills() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const [activeSkill, setActiveSkill] = useState<string | null>('Java');
+  const [isVisible, setIsVisible] = useState(false);
+  const [displayPercents, setDisplayPercents] = useState<Record<string, number>>(() =>
+    Object.fromEntries([...languages, ...tools].map((skill) => [skill.name, 0]))
+  );
+
+  const allSkills = useMemo(() => [...languages, ...tools], []);
+
+  useEffect(() => {
+    if (!containerRef.current) {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) {
+      return;
+    }
+
+    const startedAt = performance.now();
+    const duration = 1400;
+    let frame = 0;
+
+    const tick = (now: number) => {
+      const elapsed = Math.min((now - startedAt) / duration, 1);
+      const eased = 1 - Math.pow(1 - elapsed, 3);
+
+      setDisplayPercents(
+        Object.fromEntries(
+          allSkills.map((skill) => [skill.name, Math.round(skill.percent * eased)])
+        )
+      );
+
+      if (elapsed < 1) {
+        frame = requestAnimationFrame(tick);
+      }
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [allSkills, isVisible]);
 
   return (
-    <div className="skills-root">
+    <div className={`skills-root ${isVisible ? 'skills-visible' : ''}`} ref={containerRef}>
       <style jsx global>{`
         .skills-root {
           background: #080b18;
@@ -164,6 +228,14 @@ export default function TechnicalSkills() {
           bottom: -70px;
           right: -50px;
           background: rgba(14, 165, 233, 0.14);
+        }
+
+        .skills-root::marker {
+          content: '';
+        }
+
+        .skills-root::selection {
+          background: rgba(99, 102, 241, 0.25);
         }
 
         .header {
@@ -207,6 +279,14 @@ export default function TechnicalSkills() {
           padding: 1rem;
           backdrop-filter: blur(6px);
           box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+          opacity: 0;
+          transform: translateY(28px) scale(0.98);
+          transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .skills-visible .section-card {
+          opacity: 1;
+          transform: translateY(0) scale(1);
         }
 
         .card-header {
@@ -257,7 +337,7 @@ export default function TechnicalSkills() {
           cursor: pointer;
           text-align: left;
           font: inherit;
-          transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+          transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
         }
 
         .skill-row:hover,
@@ -266,6 +346,7 @@ export default function TechnicalSkills() {
           background: rgba(110, 80, 255, 0.12);
           border-color: rgba(130, 100, 255, 0.35);
           transform: translateX(4px);
+          box-shadow: 0 10px 24px rgba(14, 165, 233, 0.08);
           outline: none;
         }
 
@@ -302,7 +383,13 @@ export default function TechnicalSkills() {
           width: var(--target-width);
           height: 100%;
           border-radius: 999px;
-          transition: width 0.3s ease;
+          transform-origin: left center;
+          transform: scaleX(0);
+          transition: transform 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .skills-visible .progress-fill {
+          transform: scaleX(1);
         }
 
         .percent-label {
@@ -339,6 +426,7 @@ export default function TechnicalSkills() {
           label="Languages"
           skills={languages}
           activeSkill={activeSkill}
+          displayPercents={displayPercents}
           onSelect={setActiveSkill}
         />
         <SkillCard
@@ -346,6 +434,7 @@ export default function TechnicalSkills() {
           label="Tools & Frameworks"
           skills={tools}
           activeSkill={activeSkill}
+          displayPercents={displayPercents}
           onSelect={setActiveSkill}
         />
       </div>
