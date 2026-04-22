@@ -492,3 +492,183 @@ hr.divider {
     padding: 0.75rem 1rem;
   }
 }
+
+@keyframes dotPulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.4; }
+}
+@keyframes spinRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes auroraPulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.15); opacity: 0.65; }
+}
+
+/* Availability pill */
+.avail-pill {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.28);
+  border-radius: 99px; padding: 5px 13px; font-size: 12px; color: #6ee7b7;
+  margin-bottom: 16px;
+}
+.avail-dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #10b981;
+  flex-shrink: 0; animation: dotPulse 1.6s ease-in-out infinite;
+}
+
+/* Hero name gradient — apply to a <span> wrapping just the name */
+.gradient-name {
+  background: linear-gradient(135deg, #a78bfa 0%, #67e8f9 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+/* Spinning conic-gradient ring around profile image */
+.ring-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  padding: 4px;
+  background: conic-gradient(#7c3aed, #06b6d4, #a78bfa, #7c3aed);
+  animation: spinRing 7s linear infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  box-shadow: 0 0 18px rgba(124, 58, 237, 0.32);
+}
+.ring-inner {
+  width: 100%; height: 100%; border-radius: 50%;
+  overflow: hidden; border: 4px solid #0f1115;
+}
+
+.profile-shell-clean {
+  background: transparent;
+  border-color: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.profile-shell-clean:hover {
+  background: transparent;
+}
+
+.ring-inner .profile-img {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+}
+
+/* Hero aurora background glows */
+.hero-section { position: relative; overflow: hidden; }
+.hero-section::before {
+  content: ''; position: absolute; top: -80px; right: -60px;
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 72%);
+  pointer-events: none; animation: auroraPulse 6s ease-in-out infinite;
+  z-index: 0;
+}
+.hero-section::after {
+  content: ''; position: absolute; bottom: -100px; left: -60px;
+  width: 320px; height: 320px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(6,182,212,0.05) 0%, transparent 72%);
+  pointer-events: none; animation: auroraPulse 8s ease-in-out infinite reverse;
+  z-index: 0;
+}
+
+.hero-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Scroll reveal */
+.reveal {
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+  transition-delay: calc(var(--reveal-i, 0) * 0.08s);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Section divider gradient line */
+.section-divider {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.section-divider::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(167,139,250,0.35), transparent);
+}
+
+/* Horizontal gradient rule between sections */
+.grad-rule {
+  height: 1px; margin: 0 28px;
+  background: linear-gradient(90deg, transparent, rgba(167,139,250,0.18), transparent);
+}
+
+/* Project card top shimmer line on hover */
+.project-card-enhanced {
+  position: relative; overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.project-card-enhanced::before {
+  content: ''; position: absolute; top: 0; left: 15%; right: 15%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(167,139,250,0.6), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.project-card-enhanced:hover { transform: translateY(-3px); border-color: rgba(167,139,250,0.32); }
+.project-card-enhanced:hover::before { opacity: 1; }
+
+/* Tech tag pills on project cards */
+.tech-tag {
+  font-size: 10px; color: #c4b5fd;
+  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.22);
+  border-radius: 99px; padding: 3px 9px;
+}
+
+/* Education timeline line */
+.edu-timeline { position: relative; padding-left: 20px; }
+.edu-timeline::before {
+  content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 1px;
+  background: linear-gradient(180deg, rgba(167,139,250,0.5), rgba(6,182,212,0.25), transparent);
+}
+.edu-entry { position: relative; padding-left: 16px; margin-bottom: 22px; }
+.edu-entry::before {
+  content: ''; position: absolute; left: -24px; top: 6px;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #a78bfa; border: 2px solid #0f1115;
+  box-shadow: 0 0 8px rgba(167,139,250,0.55);
+}
+
+/* Coursework tags (pill style, interactive hover) */
+.cw-tag {
+  font-size: 11px; color: rgba(255,255,255,0.6);
+  background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 99px; padding: 5px 13px;
+  transition: border-color 0.2s, color 0.2s;
+}
+.cw-tag:hover { border-color: rgba(167,139,250,0.4); color: #a78bfa; }
+
+/* Certification cards with left accent border */
+.cert-card-styled {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+  border-left: 3px solid #7c3aed; border-radius: 10px; padding: 14px 16px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.cert-card-styled:hover { transform: translateY(-2px); border-color: rgba(167,139,250,0.35); }
+.cert-card-styled .cert-name { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.85); margin-bottom: 4px; line-height: 1.4; }
+.cert-card-styled .cert-issuer { font-size: 11px; color: #a78bfa; }
+
+/* Download resume button */
+.btn-resume {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.7); font-size: 12px; padding: 9px 20px;
+  border-radius: 99px; cursor: pointer; text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.btn-resume:hover { border-color: #a78bfa; color: #a78bfa; }
