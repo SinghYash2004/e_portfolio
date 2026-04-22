@@ -100,6 +100,15 @@ export default function Home() {
             >
               <LinkIcon size={16} /> LinkedIn
             </a>
+            <a
+              href="https://github.com/SinghYash2004"
+              target="_blank"
+              rel="noreferrer"
+              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
+              style={revealStyle(4)}
+            >
+              <Github size={16} /> GitHub
+            </a>
           </div>
           <a
             href="mailto:ys6463@srmist.edu.in?subject=Resume%20Request%20from%20Portfolio"
