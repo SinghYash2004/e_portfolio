@@ -3,7 +3,18 @@
 import { useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { IconType } from 'react-icons';
-import { FaCss3Alt, FaDatabase, FaGitAlt, FaHtml5, FaJava, FaJs, FaReact, FaSwift } from 'react-icons/fa';
+import {
+  FaCode,
+  FaCss3Alt,
+  FaDatabase,
+  FaGitAlt,
+  FaHtml5,
+  FaJava,
+  FaJs,
+  FaReact,
+  FaSwift,
+  FaTools,
+} from 'react-icons/fa';
 import { SiCplusplus, SiIntellijidea, SiMysql, SiNextdotjs } from 'react-icons/si';
 import { TbBrandCSharp, TbLetterC } from 'react-icons/tb';
 
@@ -15,7 +26,7 @@ type Skill = {
 };
 
 type SkillCardProps = {
-  emoji: string;
+  icon: IconType;
   label: string;
   skills: Skill[];
   activeSkill: string | null;
@@ -63,12 +74,12 @@ const hexToRgba = (hex: string, alpha: number) => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
-function SkillCard({ emoji, label, skills, activeSkill, onSelect }: SkillCardProps) {
+function SkillCard({ icon: HeaderIcon, label, skills, activeSkill, onSelect }: SkillCardProps) {
   return (
     <div className="section-card">
       <div className="card-header">
         <div className="icon-badge-header" aria-hidden="true">
-          {emoji}
+          <HeaderIcon size={14} />
         </div>
         <span className="card-label">{label}</span>
       </div>
@@ -215,7 +226,7 @@ export default function TechnicalSkills() {
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 14px;
+          color: #d8b4fe;
         }
 
         .card-label {
@@ -324,14 +335,14 @@ export default function TechnicalSkills() {
 
       <div className="skills-grid">
         <SkillCard
-          emoji="💻"
+          icon={FaCode}
           label="Languages"
           skills={languages}
           activeSkill={activeSkill}
           onSelect={setActiveSkill}
         />
         <SkillCard
-          emoji="⚙️"
+          icon={FaTools}
           label="Tools & Frameworks"
           skills={tools}
           activeSkill={activeSkill}
