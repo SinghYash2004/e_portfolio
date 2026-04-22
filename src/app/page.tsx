@@ -69,8 +69,8 @@ export default function Home() {
         
         <ClientTilt className="profile-img-container profile-shell-clean animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
           <div className="animate-float" style={{ width: '100%', height: '100%' }}>
-            <div className="ring-wrapper">
-              <div className="ring-inner">
+            <div className="profile-aura-wrap">
+              <div className="profile-aura-core">
                 <Image 
                   src="/profile.jpeg" 
                   alt="Yash Pratap Singh" 
@@ -97,25 +97,24 @@ export default function Home() {
       <div className="grad-rule" />
 
       {/* Projects Section */}
-      <section id="projects" className="animate-fade-in delay-2">
+      <section id="projects" className="animate-fade-in delay-2 project-showcase">
         <div className="flex items-center gap-2 mb-8 section-divider">
           <Star className="gradient-text" size={32} />
           <h2 className="text-3xl font-bold">Projects & Achievements</h2>
         </div>
         
-        <div className="timeline">
+        <div className="timeline project-timeline">
           <div className="timeline-item glass-panel project-card-enhanced reveal">
             <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold">Compact Multithreaded Web Server</h3>
-              <span className="text-muted">2025</span>
+              <h3 className="text-xl font-bold project-title">Compact Multithreaded Web Server</h3>
+              <span className="text-muted project-year">2025</span>
             </div>
-            <p className="text-sm text-primary mb-4 font-medium">C++ | Socket Programming | Multithreading | Thread Pool | TCP</p>
             <div className="flex flex-wrap gap-1.5 mb-3">
               {['C++', 'Socket Programming', 'Multithreading', 'Thread Pool', 'TCP'].map((t) => (
                 <span key={t} className="tech-tag">{t}</span>
               ))}
             </div>
-            <ul className="list-none flex flex-col gap-3 text-muted">
+            <ul className="list-none flex flex-col gap-3 text-muted project-copy project-list">
               <li className="flex gap-2 items-start"><ChevronRight className="text-primary mt-1 shrink-0" size={16} /> <span>Developed a lightweight multithreaded HTTP web server in C++ using POSIX sockets to handle concurrent static content requests. Implemented a priority-based thread pool and load-balanced task queue to improve request scheduling and overall server efficiency.</span></li>
               <li className="flex gap-2 items-start"><ChevronRight className="text-primary mt-1 shrink-0" size={16} /> <span>Presented the paper &quot;Compact Multithreaded Web Server for Static Request Handling&quot; at the IEEE-sponsored ICAECT 2026 international conference. The work demonstrates a C++ multithreaded server architecture for efficient concurrent HTTP request handling.</span></li>
             </ul>
@@ -123,16 +122,15 @@ export default function Home() {
 
           <div className="timeline-item glass-panel project-card-enhanced reveal">
             <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold">Intelligent Academic ERP System</h3>
-              <span className="text-muted">2026</span>
+              <h3 className="text-xl font-bold project-title">Intelligent Academic ERP System</h3>
+              <span className="text-muted project-year">2026</span>
             </div>
-            <p className="text-sm text-primary mb-4 font-medium">DBMS | Algorithm Design | ERP Architecture</p>
             <div className="flex flex-wrap gap-1.5 mb-3">
               {['DBMS', 'Algorithm Design', 'ERP Architecture', 'ML'].map((t) => (
                 <span key={t} className="tech-tag">{t}</span>
               ))}
             </div>
-            <p className="text-muted">
+            <p className="text-muted project-copy">
               Developing an academic prototype that integrates relational database design, scheduling algorithms, and machine learning models to generate conflict-free timetables, predict resource utilization, and support data-driven academic planning.
             </p>
           </div>
