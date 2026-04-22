@@ -4,11 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(
-    () =>
-      typeof window !== "undefined" &&
-      window.matchMedia("(hover: hover) and (pointer: fine)").matches
-  );
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
@@ -20,6 +16,7 @@ export default function CustomCursor() {
       requestAnimationFrame(() => {
         setPosition({ x: e.clientX, y: e.clientY });
       });
+      setIsVisible(true);
     };
 
     const onMouseLeave = () => setIsVisible(false);

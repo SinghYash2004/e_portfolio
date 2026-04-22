@@ -35,14 +35,12 @@ export default function MagneticLink({
   style,
 }: MagneticLinkProps) {
   const [pointer, setPointer] = useState<PointerState>(INITIAL_POINTER);
-  const [enabled] = useState(
-    () =>
-      typeof window !== 'undefined' &&
-      window.matchMedia('(hover: hover) and (pointer: fine)').matches
-  );
 
   const handleMove: AnchorHTMLAttributes<HTMLAnchorElement>['onMouseMove'] = (event) => {
-    if (!enabled) {
+    if (
+      typeof window === 'undefined' ||
+      !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    ) {
       return;
     }
 
@@ -67,9 +65,10 @@ export default function MagneticLink({
       onMouseLeave={handleLeave}
       style={{
         ...style,
-        transform: enabled
-          ? `translate3d(${pointer.x}px, ${pointer.y}px, 0)`
-          : style?.transform,
+        transform:
+          pointer.x !== 0 || pointer.y !== 0
+            ? `translate3d(${pointer.x}px, ${pointer.y}px, 0)`
+            : style?.transform,
       }}
     >
       <span className="magnetic-link__inner">{children}</span>

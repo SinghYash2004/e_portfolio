@@ -21,11 +21,11 @@ import ClientTilt from "@/components/ClientTilt";
 import TechnicalSkills from "@/components/TechnicalSkills";
 import MagneticLink from "@/components/MagneticLink";
 
-type RevealStyle = React.CSSProperties & { "--reveal-i": number };
+type RevealStyle = React.CSSProperties & { "--reveal-i": string };
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
-  const revealStyle = (index: number): RevealStyle => ({ "--reveal-i": index });
+  const revealStyle = (index: number): RevealStyle => ({ "--reveal-i": String(index) });
 
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -109,12 +109,12 @@ export default function Home() {
             <span className="avail-dot" />
             <span>Open to opportunities</span>
           </div>
-          <h1 className="text-5xl font-bold mb-3 animate-title masked-title reveal" style={revealStyle(0)}>
+          <h1 className="text-5xl font-bold mb-3 animate-title hero-heading">
             Hi, I&apos;m <span className="shimmer-text gradient-name">Yash Pratap Singh</span>
           </h1>
           <Typewriter />
           <p
-            className="text-muted text-lg animate-sophisticated delay-2 reveal hero-lead"
+            className="text-muted text-lg animate-sophisticated delay-2 hero-lead"
             style={{ maxWidth: "600px" }}
           >
             B.Tech Computer Science student with a working knowledge of programming and software
@@ -125,20 +125,17 @@ export default function Home() {
           <div id="contact" className="contact-links mt-8 animate-sophisticated delay-3">
             <MagneticLink
               href="mailto:ys6463@srmist.edu.in"
-              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
-              style={revealStyle(0)}
+              className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <Mail size={16} /> ys6463@srmist.edu.in
             </MagneticLink>
             <span
-              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
-              style={revealStyle(1)}
+              className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <Phone size={16} /> +91-7061293059
             </span>
             <span
-              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
-              style={revealStyle(2)}
+              className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <MapPin size={16} /> Tiruchirappalli, TN, India
             </span>
@@ -146,8 +143,7 @@ export default function Home() {
               href="https://linkedin.com/in/yash-pratap-singh-b43925327/"
               target="_blank"
               rel="noreferrer"
-              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
-              style={revealStyle(3)}
+              className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <LinkIcon size={16} /> LinkedIn
             </MagneticLink>
@@ -155,13 +151,12 @@ export default function Home() {
               href="https://github.com/SinghYash2004"
               target="_blank"
               rel="noreferrer"
-              className="contact-link badge hover:scale-105 transition-transform duration-300 reveal"
-              style={revealStyle(4)}
+              className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <FaGithub size={16} /> GitHub
             </MagneticLink>
           </div>
-          <MagneticLink href="/resume.pdf" download className="btn-resume mt-4 primary-cta reveal" >
+          <MagneticLink href="/resume.pdf" download className="btn-resume mt-4 primary-cta" >
             <Download size={14} />
             Download Resume
           </MagneticLink>
@@ -183,7 +178,7 @@ export default function Home() {
                   alt="Yash Pratap Singh"
                   width={280}
                   height={280}
-                  className="profile-img shadow-glow hover:scale-105 transition-transform duration-500 cursor-pointer"
+                  className="profile-img shadow-glow profile-image-fit cursor-pointer"
                   priority
                 />
               </div>
@@ -211,12 +206,12 @@ export default function Home() {
         </div>
 
         <div className="timeline project-timeline reveal timeline-draw">
-          <div className="timeline-item glass-panel project-card-enhanced reveal">
+          <div className="timeline-item glass-panel project-card-enhanced reveal project-card-shell">
             <div className="flex justify-between flex-wrap gap-4 mb-2">
               <h3 className="text-xl font-bold project-title">Compact Multithreaded Web Server</h3>
               <span className="text-muted project-year">2025</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 mb-3">
+            <div className="flex flex-wrap gap-1.5 mb-3 project-tag-row">
               {["C++", "Socket Programming", "Multithreading", "Thread Pool", "TCP"].map((tag) => (
                 <span key={tag} className="tech-tag">
                   {tag}
@@ -243,7 +238,7 @@ export default function Home() {
                 </span>
               </li>
             </ul>
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-4 project-action-row">
               <MagneticLink
                 href="https://github.com/SinghYash2004/multi_threaded_web_server.git"
                 target="_blank"
@@ -265,12 +260,12 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="timeline-item glass-panel project-card-enhanced reveal">
+          <div className="timeline-item glass-panel project-card-enhanced reveal project-card-shell">
             <div className="flex justify-between flex-wrap gap-4 mb-2">
               <h3 className="text-xl font-bold project-title">Intelligent Academic ERP System</h3>
               <span className="text-muted project-year">2026</span>
             </div>
-            <div className="flex flex-wrap gap-1.5 mb-3">
+            <div className="flex flex-wrap gap-1.5 mb-3 project-tag-row">
               {["DBMS", "Algorithm Design", "ERP Architecture", "ML"].map((tag) => (
                 <span key={tag} className="tech-tag">
                   {tag}
@@ -282,7 +277,7 @@ export default function Home() {
               scheduling algorithms, and machine learning models to generate conflict-free
               timetables, predict resource utilization, and support data-driven academic planning.
             </p>
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 mt-4 project-action-row">
               <MagneticLink
                 href="https://github.com/SinghYash2004/TimeTableGenerator.git"
                 target="_blank"
@@ -375,11 +370,9 @@ export default function Home() {
               </div>
               <div className="cert-card-styled reveal" style={revealStyle(3)}>
                 <div className="cert-name">Analysis of Algorithm</div>
-                <div className="cert-issuer">Add issuer and certificate link</div>
               </div>
               <div className="cert-card-styled reveal" style={revealStyle(4)}>
                 <div className="cert-name">Data Science Math Skills</div>
-                <div className="cert-issuer">Add issuer and certificate link</div>
               </div>
               <div className="cert-card-styled reveal" style={revealStyle(5)}>
                 <div className="cert-name">Sustainable Development in the 21st Century</div>
