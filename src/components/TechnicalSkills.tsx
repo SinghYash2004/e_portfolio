@@ -1,116 +1,120 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import { useState } from 'react';
+import type { CSSProperties } from 'react';
+import type { IconType } from 'react-icons';
+import { FaCss3Alt, FaDatabase, FaGitAlt, FaHtml5, FaJava, FaJs, FaReact, FaSwift } from 'react-icons/fa';
+import { SiCplusplus, SiIntellijidea, SiMysql, SiNextdotjs } from 'react-icons/si';
+import { TbBrandCSharp, TbLetterC } from 'react-icons/tb';
 
-const languages = [
-  { name: 'Java', path: 'java/java-original.svg', color: '#f89820', percent: 88 },
-  { name: 'C++', path: 'cplusplus/cplusplus-original.svg', color: '#00599c', percent: 75 },
-  { name: 'C', path: 'c/c-original.svg', color: '#5c6bc0', percent: 72 },
-  { name: 'Swift', path: 'swift/swift-original.svg', color: '#fa7343', percent: 65 },
-  { name: 'HTML', path: 'html5/html5-original.svg', color: '#e34c26', percent: 93 },
-  { name: 'CSS', path: 'css3/css3-original.svg', color: '#264de4', percent: 87 },
-  { name: 'JavaScript', path: 'javascript/javascript-original.svg', color: '#f7df1e', percent: 91 },
+type Skill = {
+  name: string;
+  color: string;
+  percent: number;
+  icon: IconType;
+};
+
+type SkillCardProps = {
+  emoji: string;
+  label: string;
+  skills: Skill[];
+  activeSkill: string | null;
+  onSelect: (skillName: string) => void;
+};
+
+type ProgressStyle = CSSProperties & {
+  '--target-width': string;
+};
+
+const languages: Skill[] = [
+  { name: 'Java', color: '#f89820', percent: 88, icon: FaJava },
+  { name: 'C++', color: '#00599c', percent: 75, icon: SiCplusplus },
+  { name: 'C', color: '#5c6bc0', percent: 72, icon: TbLetterC },
+  { name: 'Swift', color: '#fa7343', percent: 65, icon: FaSwift },
+  { name: 'HTML', color: '#e34c26', percent: 93, icon: FaHtml5 },
+  { name: 'CSS', color: '#264de4', percent: 87, icon: FaCss3Alt },
+  { name: 'JavaScript', color: '#f7df1e', percent: 91, icon: FaJs },
 ];
 
-const tools = [
-  { name: 'Git', path: 'git/git-original.svg', color: '#f1502f', percent: 89 },
-  { name: 'SQL', path: 'azuresqldatabase/azuresqldatabase-original.svg', color: '#00758f', percent: 80 },
-  { name: 'MySQL', path: 'mysql/mysql-original.svg', color: '#00758f', percent: 76 },
-  { name: 'SwiftUI', path: 'swift/swift-original.svg', color: '#fa7343', percent: 62 },
-  { name: 'IntelliJ', path: 'intellij/intellij-original.svg', color: '#e53888', percent: 78 },
-  { name: 'React', path: 'react/react-original.svg', color: '#61dafb', percent: 85 },
-  { name: 'Next.js', path: 'nextjs/nextjs-original.svg', color: '#ffffff', percent: 71 },
+const tools: Skill[] = [
+  { name: 'Git', color: '#f1502f', percent: 89, icon: FaGitAlt },
+  { name: 'SQL', color: '#4db6ac', percent: 80, icon: FaDatabase },
+  { name: 'MySQL', color: '#00758f', percent: 76, icon: SiMysql },
+  { name: 'SwiftUI', color: '#0ea5e9', percent: 62, icon: TbBrandCSharp },
+  { name: 'IntelliJ', color: '#e53888', percent: 78, icon: SiIntellijidea },
+  { name: 'React', color: '#61dafb', percent: 85, icon: FaReact },
+  { name: 'Next.js', color: '#ffffff', percent: 71, icon: SiNextdotjs },
 ];
 
-const TechnicalSkills = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+const hexToRgba = (hex: string, alpha: number) => {
+  const normalized = hex.replace('#', '');
+  const safeHex = normalized.length === 3
+    ? normalized.split('').map((char) => char + char).join('')
+    : normalized;
 
-  useEffect(() => {
-    const rows = document.querySelectorAll('.skill-row');
-    const container = containerRef.current;
+  const r = parseInt(safeHex.slice(0, 2), 16);
+  const g = parseInt(safeHex.slice(2, 4), 16);
+  const b = parseInt(safeHex.slice(4, 6), 16);
 
-    const handleRowClick = (e: Event) => {
-      const row = e.currentTarget as HTMLElement;
-      const isActive = row.classList.contains('active');
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
 
-      // Deactivate all others
-      rows.forEach(r => r.classList.remove('active'));
+function SkillCard({ emoji, label, skills, activeSkill, onSelect }: SkillCardProps) {
+  return (
+    <div className="section-card">
+      <div className="card-header">
+        <div className="icon-badge-header" aria-hidden="true">
+          {emoji}
+        </div>
+        <span className="card-label">{label}</span>
+      </div>
 
-      if (!isActive) {
-        row.classList.add('active');
-        triggerParticles(row);
-      }
-    };
+      <div className="skills-list">
+        {skills.map((skill) => {
+          const Icon = skill.icon;
+          const isActive = activeSkill === skill.name;
+          const progressStyle: ProgressStyle = {
+            '--target-width': `${skill.percent}%`,
+            background: `linear-gradient(90deg, ${hexToRgba(skill.color, 0.72)}, ${skill.color})`,
+          };
 
-    const triggerParticles = (row: HTMLElement) => {
-      const color = row.getAttribute('data-color') || '#8b5cf6';
-      const particlesContainer = row.closest('.section-card')?.querySelector('.particles-container');
-      if (!particlesContainer) return;
+          return (
+            <button
+              key={skill.name}
+              type="button"
+              className={`skill-row ${isActive ? 'active' : ''}`}
+              onClick={() => onSelect(skill.name)}
+            >
+              <div
+                className="icon-badge-row"
+                style={{ background: hexToRgba(skill.color, 0.15), color: skill.color }}
+              >
+                <Icon size={18} />
+              </div>
 
-      const rect = row.getBoundingClientRect();
-      const parentRect = (particlesContainer as HTMLElement).getBoundingClientRect();
+              <div className="info-col">
+                <p className="skill-name">{skill.name}</p>
+                <div className="progress-outer">
+                  <div className="progress-fill" style={progressStyle} />
+                </div>
+              </div>
 
-      const centerX = rect.left - parentRect.left + rect.width / 2;
-      const centerY = rect.top - parentRect.top + rect.height / 2;
+              <span className="percent-label" style={{ color: skill.color }}>
+                {skill.percent}%
+              </span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
 
-      for (let i = 0; i < 7; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'skill-particle';
-        particle.style.backgroundColor = color;
-        particle.style.left = `${centerX}px`;
-        particle.style.top = `${centerY}px`;
-
-        const tx = (Math.random() * 60 - 30) + 'px';
-        const ty = (Math.random() * 60 - 30) + 'px';
-        particle.style.setProperty('--tx', tx);
-        particle.style.setProperty('--ty', ty);
-
-        particlesContainer.appendChild(particle);
-        setTimeout(() => particle.remove(), 1200);
-      }
-    };
-
-    const handleMouseEnter = (e: Event) => {
-      const img = (e.currentTarget as HTMLElement).querySelector('img');
-      img?.classList.add('spinning');
-    };
-
-    const handleMouseLeave = (e: Event) => {
-      const img = (e.currentTarget as HTMLElement).querySelector('img');
-      img?.classList.remove('spinning');
-    };
-
-    rows.forEach(row => {
-      row.addEventListener('click', handleRowClick);
-      row.addEventListener('mouseenter', handleMouseEnter);
-      row.addEventListener('mouseleave', handleMouseLeave);
-    });
-
-    return () => {
-      rows.forEach(row => {
-        row.removeEventListener('click', handleRowClick);
-        row.removeEventListener('mouseenter', handleMouseEnter);
-        row.removeEventListener('mouseleave', handleMouseLeave);
-      });
-    };
-  }, []);
-
-  const hexToRgba = (hex: string, alpha: number) => {
-    let r = 0, g = 0, b = 0;
-    if (hex.length === 4) {
-      r = parseInt(hex[1] + hex[1], 16);
-      g = parseInt(hex[2] + hex[2], 16);
-      b = parseInt(hex[3] + hex[3], 16);
-    } else {
-      r = parseInt(hex.slice(1, 3), 16);
-      g = parseInt(hex.slice(3, 5), 16);
-      b = parseInt(hex.slice(5, 7), 16);
-    }
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  };
+export default function TechnicalSkills() {
+  const [activeSkill, setActiveSkill] = useState<string | null>('Java');
 
   return (
-    <div className="skills-root" ref={containerRef}>
+    <div className="skills-root">
       <style jsx>{`
         .skills-root {
           background: #080b18;
@@ -119,67 +123,41 @@ const TechnicalSkills = () => {
           overflow: hidden;
           position: relative;
           color: #fff;
-          font-family: 'Inter', sans-serif;
           z-index: 1;
         }
 
-        /* Ambient Orbs */
-        .orb {
+        .skills-root::before,
+        .skills-root::after {
+          content: '';
           position: absolute;
-          border-radius: 50%;
-          filter: blur(60px);
-          z-index: 0;
+          border-radius: 999px;
+          filter: blur(70px);
           pointer-events: none;
         }
-        .orb-1 {
-          width: 300px;
-          height: 300px;
-          background: radial-gradient(circle, rgba(100, 60, 255, 0.18), transparent);
-          top: -100px;
-          left: -100px;
-          animation: bgFloat 9s ease-in-out infinite;
+
+        .skills-root::before {
+          width: 280px;
+          height: 280px;
+          top: -90px;
+          left: -80px;
+          background: rgba(99, 102, 241, 0.18);
         }
-        .orb-2 {
-          width: 250px;
-          height: 250px;
-          background: radial-gradient(circle, rgba(60, 160, 255, 0.12), transparent);
-          bottom: -50px;
+
+        .skills-root::after {
+          width: 220px;
+          height: 220px;
+          bottom: -70px;
           right: -50px;
-          animation: bgFloat 11s ease-in-out infinite reverse;
-          animation-delay: -2s;
-        }
-        .orb-3 {
-          width: 200px;
-          height: 200px;
-          background: radial-gradient(circle, rgba(200, 80, 255, 0.1), transparent);
-          top: 40%;
-          left: 50%;
-          animation: bgFloat 8s ease-in-out infinite;
-          animation-delay: -4s;
+          background: rgba(14, 165, 233, 0.14);
         }
 
-        /* Scan Line */
-        .scan-line {
-          position: absolute;
-          left: 0;
-          width: 100%;
-          height: 40px;
-          background: linear-gradient(to bottom, transparent, rgba(120, 80, 255, 0.04), transparent);
-          z-index: 0;
-          pointer-events: none;
-          animation: scanLine 3s linear infinite;
-        }
-
-        .content-wrapper {
+        .header {
           position: relative;
           z-index: 1;
+          text-align: center;
+          margin-bottom: 2rem;
         }
 
-        /* Header Styles */
-        .header {
-          text-align: center;
-          margin-bottom: 2.5rem;
-        }
         .title {
           font-size: 26px;
           font-weight: 700;
@@ -188,36 +166,32 @@ const TechnicalSkills = () => {
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          animation: titleReveal 0.8s ease forwards, shimmerText 4s linear infinite 1s;
+          animation: shimmerText 5s linear infinite;
           display: inline-block;
         }
+
         .subtitle {
           font-size: 12px;
-          color: rgba(150, 140, 200, 0.7);
+          color: rgba(150, 140, 200, 0.8);
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          animation: fadeUp 0.8s ease forwards 0.3s;
-          opacity: 0;
         }
 
-        /* Grid & Cards */
         .skills-grid {
+          position: relative;
+          z-index: 1;
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 1rem;
         }
+
         .section-card {
-          background: rgba(255, 255, 255, 0.03);
+          background: rgba(255, 255, 255, 0.04);
           border: 1px solid rgba(120, 100, 255, 0.18);
           border-radius: 18px;
           padding: 1rem;
-          backdrop-filter: blur(4px);
-          position: relative;
-          animation: fadeUp 0.7s ease forwards, borderGlow 4s ease-in-out infinite;
-          opacity: 0;
-        }
-        .section-card:nth-child(2) {
-          animation-delay: 0.15s;
+          backdrop-filter: blur(6px);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
         }
 
         .card-header {
@@ -228,6 +202,7 @@ const TechnicalSkills = () => {
           padding-bottom: 0.75rem;
           border-bottom: 1px solid rgba(120, 100, 255, 0.12);
         }
+
         .icon-badge-header {
           width: 30px;
           height: 30px;
@@ -237,182 +212,95 @@ const TechnicalSkills = () => {
           align-items: center;
           justify-content: center;
           font-size: 14px;
-          animation: float 3s ease-in-out infinite;
         }
+
         .card-label {
           font-size: 11px;
           font-weight: 600;
-          color: rgba(180, 165, 255, 0.85);
+          color: rgba(180, 165, 255, 0.9);
           letter-spacing: 0.1em;
           text-transform: uppercase;
         }
 
-        /* Skill Rows */
+        .skills-list {
+          display: grid;
+          gap: 0.5rem;
+        }
+
         .skill-row {
           display: flex;
           align-items: center;
-          gap: 9px;
-          padding: 8px 9px;
-          border-radius: 11px;
-          margin-bottom: 5px;
-          cursor: pointer;
+          gap: 10px;
+          width: 100%;
+          padding: 0.75rem;
+          border-radius: 12px;
           border: 1px solid transparent;
-          position: relative;
-          overflow: hidden;
-          transition: 0.25s;
-          animation: fadeUp 0.5s ease forwards;
-          opacity: 0;
+          background: rgba(255, 255, 255, 0.02);
+          color: inherit;
+          cursor: pointer;
+          text-align: left;
+          transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
         }
-        .skill-row:hover {
+
+        .skill-row:hover,
+        .skill-row:focus-visible,
+        .skill-row.active {
           background: rgba(110, 80, 255, 0.12);
           border-color: rgba(130, 100, 255, 0.35);
-          transform: translateX(5px);
-        }
-        .skill-row::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(120, 80, 255, 0.1), transparent 60%);
-          opacity: 0;
-          transition: 0.25s;
-          pointer-events: none;
-        }
-        .skill-row:hover::after {
-          opacity: 1;
-        }
-        .skill-row.active {
-          background: rgba(110, 80, 255, 0.18);
-          border-color: rgba(160, 130, 255, 0.5);
-          animation: pulse 2s ease-in-out infinite;
+          transform: translateX(4px);
+          outline: none;
         }
 
         .icon-badge-row {
-          width: 34px;
-          height: 34px;
-          border-radius: 9px;
+          width: 36px;
+          height: 36px;
+          border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          position: relative;
-          z-index: 2;
-        }
-        .icon-badge-row img {
-          width: 20px;
-          height: 20px;
-          object-fit: contain;
-          transition: transform 0.5s ease;
-        }
-        .icon-badge-row img.spinning {
-          animation: iconSpin 0.5s ease;
         }
 
         .info-col {
           flex: 1;
           min-width: 0;
-          position: relative;
-          z-index: 2;
         }
+
         .skill-name {
-          font-size: 12.5px;
-          font-weight: 500;
+          font-size: 13px;
+          font-weight: 600;
           color: #e2e0ff;
-          margin: 0 0 5px;
+          margin: 0 0 6px;
         }
+
         .progress-outer {
-          height: 3px;
+          height: 4px;
           background: rgba(255, 255, 255, 0.07);
-          border-radius: 2px;
+          border-radius: 999px;
           overflow: hidden;
         }
+
         .progress-fill {
+          width: var(--target-width);
           height: 100%;
-          border-radius: 2px;
-          width: 0;
-          opacity: 0;
-          animation: barFill 1.2s ease forwards;
-        }
-        .skill-row.active .progress-fill {
-          box-shadow: 0 0 8px rgba(160, 130, 255, 0.6);
+          border-radius: 999px;
+          transition: width 0.3s ease;
         }
 
         .percent-label {
           font-size: 11px;
-          font-weight: 600;
-          min-width: 26px;
+          font-weight: 700;
+          min-width: 34px;
           text-align: right;
-          opacity: 0;
-          animation: numberCount 0.5s ease forwards;
-          position: relative;
-          z-index: 2;
         }
 
-        /* Particle System */
-        .particles-container {
-          position: absolute;
-          inset: 0;
-          pointer-events: none;
-          overflow: hidden;
-          border-radius: 18px;
-        }
-        :global(.skill-particle) {
-          position: absolute;
-          width: 3px;
-          height: 3px;
-          border-radius: 50%;
-          pointer-events: none;
-          animation: particlePop 1s ease forwards;
-        }
-
-        /* Keyframes */
-        @keyframes bgFloat {
-          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-          50% { transform: translateY(-40px) rotate(180deg); opacity: 1; }
-        }
-        @keyframes scanLine {
-          from { top: -40px; }
-          to { top: 100%; }
-        }
-        @keyframes titleReveal {
-          from { opacity: 0; letter-spacing: 0.4em; filter: blur(8px); }
-          to { opacity: 1; letter-spacing: -0.02em; filter: blur(0); }
-        }
         @keyframes shimmerText {
-          from { background-position: 200% center; }
-          to { background-position: -200% center; }
-        }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes borderGlow {
-          0%, 100% { border-color: rgba(120, 80, 255, 0.2); }
-          50% { border-color: rgba(160, 140, 255, 0.55); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-        }
-        @keyframes barFill {
-          from { width: 0; opacity: 0; }
-          to { width: var(--target-width); opacity: 1; }
-        }
-        @keyframes iconSpin {
-          from { transform: rotateY(0deg); }
-          to { transform: rotateY(360deg); }
-        }
-        @keyframes numberCount {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse {
-          0% { box-shadow: 0 0 0 0 rgba(130, 100, 255, 0.4); }
-          70% { box-shadow: 0 0 0 6px rgba(130, 100, 255, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(130, 100, 255, 0); }
-        }
-        @keyframes particlePop {
-          0% { transform: translate(0, 0) scale(1); opacity: 1; }
-          100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; }
+          from {
+            background-position: 200% center;
+          }
+          to {
+            background-position: -200% center;
+          }
         }
 
         @media (max-width: 768px) {
@@ -422,125 +310,27 @@ const TechnicalSkills = () => {
         }
       `}</style>
 
-      <div className="orb orb-1"></div>
-      <div className="orb orb-2"></div>
-      <div className="orb orb-3"></div>
-      <div className="scan-line"></div>
+      <header className="header">
+        <h2 className="title">Technical Skills</h2>
+        <p className="subtitle">Stack & Expertise</p>
+      </header>
 
-      <div className="content-wrapper">
-        <header className="header">
-          <h2 className="title">Technical Skills</h2>
-          <p className="subtitle">Stack & Expertise</p>
-        </header>
-
-        <div className="skills-grid">
-          {/* Languages Card */}
-          <div className="section-card">
-            <div className="particles-container"></div>
-            <div className="card-header">
-              <div className="icon-badge-header">💻</div>
-              <span className="card-label">Languages</span>
-            </div>
-            <div className="skills-list">
-              {languages.map((skill, index) => (
-                <div 
-                  key={skill.name} 
-                  className="skill-row" 
-                  data-color={skill.color}
-                  style={{ animationDelay: `${index * 0.07 + 0.4}s` } as any}
-                >
-                  <div 
-                    className="icon-badge-row" 
-                    style={{ background: hexToRgba(skill.color, 0.15) }}
-                  >
-                    <img 
-                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.path}`} 
-                      alt={skill.name}
-                      onError={(e) => {
-                        (e.currentTarget as any).style.display = 'none';
-                        (e.currentTarget.parentElement as any).innerText = skill.name[0];
-                      }}
-                    />
-                  </div>
-                  <div className="info-col">
-                    <p className="skill-name">{skill.name}</p>
-                    <div className="progress-outer">
-                      <div 
-                        className="progress-fill"
-                        style={{ 
-                          background: `linear-gradient(90deg, ${hexToRgba(skill.color, 0.7)}, ${skill.color})`,
-                          '--target-width': `${skill.percent}%`,
-                          animationDelay: `${index * 0.12 + 0.6}s`
-                        } as any}
-                      ></div>
-                    </div>
-                  </div>
-                  <span 
-                    className="percent-label" 
-                    style={{ color: skill.color, animationDelay: `${index * 0.12 + 0.7}s` } as any}
-                  >
-                    {skill.percent}%
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Tools & Frameworks Card */}
-          <div className="section-card">
-            <div className="particles-container"></div>
-            <div className="card-header">
-              <div className="icon-badge-header">⚙️</div>
-              <span className="card-label">Tools & Frameworks</span>
-            </div>
-            <div className="skills-list">
-              {tools.map((skill, index) => (
-                <div 
-                  key={skill.name} 
-                  className="skill-row" 
-                  data-color={skill.color}
-                  style={{ animationDelay: `${index * 0.07 + 0.55}s` } as any}
-                >
-                  <div 
-                    className="icon-badge-row" 
-                    style={{ background: hexToRgba(skill.color, 0.15) }}
-                  >
-                    <img 
-                      src={`https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${skill.path}`} 
-                      alt={skill.name}
-                      onError={(e) => {
-                        (e.currentTarget as any).style.display = 'none';
-                        (e.currentTarget.parentElement as any).innerText = skill.name[0];
-                      }}
-                    />
-                  </div>
-                  <div className="info-col">
-                    <p className="skill-name">{skill.name}</p>
-                    <div className="progress-outer">
-                      <div 
-                        className="progress-fill"
-                        style={{ 
-                          background: `linear-gradient(90deg, ${hexToRgba(skill.color, 0.7)}, ${skill.color})`,
-                          '--target-width': `${skill.percent}%`,
-                          animationDelay: `${index * 0.12 + 0.75}s`
-                        } as any}
-                      ></div>
-                    </div>
-                  </div>
-                  <span 
-                    className="percent-label" 
-                    style={{ color: skill.color, animationDelay: `${index * 0.12 + 0.85}s` } as any}
-                  >
-                    {skill.percent}%
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div className="skills-grid">
+        <SkillCard
+          emoji="💻"
+          label="Languages"
+          skills={languages}
+          activeSkill={activeSkill}
+          onSelect={setActiveSkill}
+        />
+        <SkillCard
+          emoji="⚙️"
+          label="Tools & Frameworks"
+          skills={tools}
+          activeSkill={activeSkill}
+          onSelect={setActiveSkill}
+        />
       </div>
     </div>
   );
-};
-
-export default TechnicalSkills;
+}

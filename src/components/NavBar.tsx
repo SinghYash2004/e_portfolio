@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, Star, Mail } from "lucide-react";
+import { User, Code2, FolderKanban, GraduationCap, Mail } from "lucide-react";
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
@@ -51,10 +51,10 @@ export default function NavBar() {
           <Code2 size={16} /> <span className="hidden-mobile">Skills</span>
         </a>
         <a href="#projects" className={`nav-link ${activeSection === "projects" ? "active" : ""}`}>
-          <Star size={16} /> <span className="hidden-mobile">Projects</span>
+          <FolderKanban size={16} /> <span className="hidden-mobile">Projects</span>
         </a>
         <a href="#education" className={`nav-link ${activeSection === "education" ? "active" : ""}`}>
-          <Star size={16} /> <span className="hidden-mobile">Education</span>
+          <GraduationCap size={16} /> <span className="hidden-mobile">Education</span>
         </a>
         <a href="#contact" className={`nav-link highlight ${activeSection === "contact" ? "active" : ""}`}>
           <Mail size={16} /> <span className="hidden-mobile">Contact</span>
