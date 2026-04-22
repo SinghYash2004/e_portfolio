@@ -32,7 +32,7 @@ export default function Home() {
   return (
     <main className="container">
       {/* Hero Section */}
-      <section id="about" className="hero-section hero-flex flex justify-between gap-8 flex-wrap items-center relative" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
+      <section id="about" className="hero-section hero-flex flex justify-between gap-8 items-center relative" style={{ paddingTop: '6rem', paddingBottom: '4rem' }}>
         <ClientTilt className="glass-panel animate-sophisticated" style={{ flex: 1, padding: '4rem 3rem' }}>
           <div className="avail-pill">
             <span className="avail-dot" />
@@ -67,7 +67,7 @@ export default function Home() {
           </a>
         </ClientTilt>
         
-        <ClientTilt className="profile-img-container profile-shell-clean animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
+        <ClientTilt className="profile-img-container profile-shell-clean hero-profile-wrap animate-profile-entrance" style={{ width: '280px', height: '280px', flexShrink: 0 }}>
           <div className="animate-float" style={{ width: '100%', height: '100%' }}>
             <div className="profile-aura-wrap">
               <div className="profile-aura-core">
@@ -85,8 +85,8 @@ export default function Home() {
         </ClientTilt>
       </section>
 
-      <hr className="divider" style={{ marginTop: '0' }} />
-      <div className="grad-rule" />
+      <hr className="divider hero-divider" style={{ marginTop: '0' }} />
+      <div className="grad-rule hero-divider" />
 
       {/* Skills Section */}
       <section id="skills" className="animate-fade-in delay-1 reveal">
