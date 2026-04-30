@@ -266,17 +266,32 @@ export default function Home() {
               <span className="text-muted project-year">2026</span>
             </div>
             <div className="flex flex-wrap gap-1.5 mb-3 project-tag-row">
-              {["DBMS", "Algorithm Design", "ERP Architecture", "ML"].map((tag) => (
+              {["Java", "Spring Boot", "MySQL", "Genetic Algorithm", "Graph Coloring"].map((tag) => (
                 <span key={tag} className="tech-tag">
                   {tag}
                 </span>
               ))}
             </div>
-            <p className="text-muted project-copy">
-              Developing an academic prototype that integrates relational database design,
-              scheduling algorithms, and machine learning models to generate conflict-free
-              timetables, predict resource utilization, and support data-driven academic planning.
-            </p>
+            <ul className="list-none flex flex-col gap-3 text-muted project-copy project-list">
+              <li className="flex gap-2 items-start">
+                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
+                <span>
+                  Built a full-stack academic ERP that automates conflict-free timetable
+                  generation using three interchangeable scheduling algorithms — Genetic
+                  Algorithm, Graph Coloring, and Greedy — with configurable parameters for
+                  population size, mutation rate, and constraint weights.
+                </span>
+              </li>
+              <li className="flex gap-2 items-start">
+                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
+                <span>
+                  Engineered a Spring Boot MVC dashboard with role-based authentication,
+                  real-time conflict detection, AI-powered risk analysis, financial budget
+                  tracking, and exportable reports (CSV/PDF/Excel) backed by a MySQL
+                  relational schema with full CRUD operations.
+                </span>
+              </li>
+            </ul>
             <div className="flex flex-wrap gap-2 mt-4 project-action-row">
               <MagneticLink
                 href="https://github.com/SinghYash2004/TimeTableGenerator.git"
@@ -286,6 +301,15 @@ export default function Home() {
               >
                 <FaGithub size={14} />
                 View Code
+              </MagneticLink>
+              <MagneticLink
+                href="https://timetablegenerator-595z.onrender.com/"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-resume action-link"
+              >
+                <ExternalLink size={14} />
+                Live Demo
               </MagneticLink>
             </div>
           </div>
