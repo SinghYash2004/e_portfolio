@@ -9,12 +9,10 @@ import {
   MapPin,
   Link as LinkIcon,
   Download,
-  ExternalLink,
   GraduationCap,
   Award,
   BookOpen,
   Star,
-  ChevronRight,
 } from "lucide-react";
 import Typewriter from "@/components/Typewriter";
 import ClientTilt from "@/components/ClientTilt";
