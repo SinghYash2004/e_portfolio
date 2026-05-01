@@ -20,6 +20,32 @@ import Typewriter from "@/components/Typewriter";
 import ClientTilt from "@/components/ClientTilt";
 import TechnicalSkills from "@/components/TechnicalSkills";
 import MagneticLink from "@/components/MagneticLink";
+import ProjectCard from "@/components/ProjectCard";
+
+const PROJECTS_DATA = [
+  {
+    title: "Compact Multithreaded Web Server",
+    year: "2025",
+    tags: ["C++", "Socket Programming", "Multithreading", "Thread Pool", "TCP"],
+    descriptionLines: [
+      "Developed a lightweight multithreaded HTTP web server in C++ using POSIX sockets to handle concurrent static content requests. Implemented a priority-based thread pool and load-balanced task queue to improve request scheduling and overall server efficiency.",
+      "Presented the paper \"Compact Multithreaded Web Server for Static Request Handling\" at the IEEE-sponsored ICAECT 2026 international conference. The work demonstrates a C++ multithreaded server architecture for efficient concurrent HTTP request handling."
+    ],
+    githubLink: "https://github.com/SinghYash2004/multi_threaded_web_server.git",
+    paperLink: "https://ieeexplore.ieee.org/document/11426147"
+  },
+  {
+    title: "Intelligent Academic ERP System",
+    year: "2026",
+    tags: ["Java", "Spring Boot", "MySQL", "Genetic Algorithm", "Graph Coloring"],
+    descriptionLines: [
+      "Built a full-stack academic ERP that automates conflict-free timetable generation using three interchangeable scheduling algorithms — Genetic Algorithm, Graph Coloring, and Greedy — with configurable parameters for population size, mutation rate, and constraint weights.",
+      "Engineered a Spring Boot MVC dashboard with role-based authentication, real-time conflict detection, AI-powered risk analysis, financial budget tracking, and exportable reports (CSV/PDF/Excel) backed by a MySQL relational schema with full CRUD operations."
+    ],
+    githubLink: "https://github.com/SinghYash2004/TimeTableGenerator.git",
+    liveLink: "https://timetablegenerator-595z.onrender.com/"
+  }
+];
 
 type RevealStyle = React.CSSProperties & { "--reveal-i": string };
 
@@ -205,114 +231,10 @@ export default function Home() {
           <h2 className="text-3xl font-bold">Projects & Achievements</h2>
         </div>
 
-        <div className="timeline project-timeline reveal timeline-draw">
-          <div className="timeline-item glass-panel project-card-enhanced reveal project-card-shell">
-            <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold project-title">Compact Multithreaded Web Server</h3>
-              <span className="text-muted project-year">2025</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5 mb-3 project-tag-row">
-              {["C++", "Socket Programming", "Multithreading", "Thread Pool", "TCP"].map((tag) => (
-                <span key={tag} className="tech-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <ul className="list-none flex flex-col gap-3 text-muted project-copy project-list">
-              <li className="flex gap-2 items-start">
-                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
-                <span>
-                  Developed a lightweight multithreaded HTTP web server in C++ using POSIX sockets
-                  to handle concurrent static content requests. Implemented a priority-based thread
-                  pool and load-balanced task queue to improve request scheduling and overall server
-                  efficiency.
-                </span>
-              </li>
-              <li className="flex gap-2 items-start">
-                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
-                <span>
-                  Presented the paper &quot;Compact Multithreaded Web Server for Static Request
-                  Handling&quot; at the IEEE-sponsored ICAECT 2026 international conference. The
-                  work demonstrates a C++ multithreaded server architecture for efficient
-                  concurrent HTTP request handling.
-                </span>
-              </li>
-            </ul>
-            <div className="flex flex-wrap gap-2 mt-4 project-action-row">
-              <MagneticLink
-                href="https://github.com/SinghYash2004/multi_threaded_web_server.git"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-resume action-link"
-              >
-                <FaGithub size={14} />
-                View Code
-              </MagneticLink>
-              <MagneticLink
-                href="https://ieeexplore.ieee.org/document/11426147"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-resume action-link"
-              >
-                <ExternalLink size={14} />
-                Research Paper
-              </MagneticLink>
-            </div>
-          </div>
-
-          <div className="timeline-item glass-panel project-card-enhanced reveal project-card-shell">
-            <div className="flex justify-between flex-wrap gap-4 mb-2">
-              <h3 className="text-xl font-bold project-title">Intelligent Academic ERP System</h3>
-              <span className="text-muted project-year">2026</span>
-            </div>
-            <div className="flex flex-wrap gap-1.5 mb-3 project-tag-row">
-              {["Java", "Spring Boot", "MySQL", "Genetic Algorithm", "Graph Coloring"].map((tag) => (
-                <span key={tag} className="tech-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-            <ul className="list-none flex flex-col gap-3 text-muted project-copy project-list">
-              <li className="flex gap-2 items-start">
-                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
-                <span>
-                  Built a full-stack academic ERP that automates conflict-free timetable
-                  generation using three interchangeable scheduling algorithms — Genetic
-                  Algorithm, Graph Coloring, and Greedy — with configurable parameters for
-                  population size, mutation rate, and constraint weights.
-                </span>
-              </li>
-              <li className="flex gap-2 items-start">
-                <ChevronRight className="text-primary mt-1 shrink-0" size={16} />
-                <span>
-                  Engineered a Spring Boot MVC dashboard with role-based authentication,
-                  real-time conflict detection, AI-powered risk analysis, financial budget
-                  tracking, and exportable reports (CSV/PDF/Excel) backed by a MySQL
-                  relational schema with full CRUD operations.
-                </span>
-              </li>
-            </ul>
-            <div className="flex flex-wrap gap-2 mt-4 project-action-row">
-              <MagneticLink
-                href="https://github.com/SinghYash2004/TimeTableGenerator.git"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-resume action-link"
-              >
-                <FaGithub size={14} />
-                View Code
-              </MagneticLink>
-              <MagneticLink
-                href="https://timetablegenerator-595z.onrender.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-resume action-link"
-              >
-                <ExternalLink size={14} />
-                Live Demo
-              </MagneticLink>
-            </div>
-          </div>
+        <div className="project-timeline-premium">
+          {PROJECTS_DATA.map((project, index) => (
+            <ProjectCard key={index} index={index} {...project} />
+          ))}
         </div>
       </section>
 

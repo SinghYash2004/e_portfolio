@@ -1262,3 +1262,282 @@ hr.divider {
     align-items: center;
   }
 }
+
+/* --- NEW PREMIUM PROJECT CARDS REDESIGN --- */
+.premium-project-card {
+  position: relative;
+  background: rgba(26, 26, 46, 0.7); /* #1a1a2e with 0.7 opacity */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-left: 3px solid rgba(124, 58, 237, 0.3); /* Subtle left border */
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.premium-project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.premium-project-card::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.8), rgba(124, 58, 237, 0.8), transparent);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.premium-project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-left-color: rgba(124, 58, 237, 0.9);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+.premium-project-card:hover::before {
+  opacity: 1;
+}
+
+.premium-project-card:hover::after {
+  opacity: 1;
+  animation: scanLine 2s linear infinite;
+}
+
+@keyframes scanLine {
+  0% { top: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+
+.project-content-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.premium-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  transition: all 0.3s ease;
+  margin-bottom: 0;
+}
+
+.premium-project-card:hover .premium-title {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.premium-bullet-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.premium-bullet-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  max-width: 65ch;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  padding: 1.2rem 0;
+  position: relative;
+}
+
+.premium-bullet-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.5rem;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), transparent);
+}
+
+.bullet-indicator {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #7c3aed;
+  flex-shrink: 0;
+  margin-top: 0.5rem;
+  box-shadow: 0 0 8px #7c3aed;
+}
+
+.premium-bullet-item:hover .bullet-indicator {
+  background: #06b6d4;
+  box-shadow: 0 0 12px #06b6d4;
+  animation: dotPulse 1.5s infinite;
+}
+
+.premium-tag-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.premium-tag {
+  font-size: 0.78rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: #c4b5fd;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.premium-tag:hover {
+  border-color: rgba(139, 92, 246, 0.8);
+  background: rgba(139, 92, 246, 0.2);
+  color: #fff;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+.premium-year {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #a78bfa;
+  background: rgba(124, 58, 237, 0.1);
+  padding: 0.3rem 1rem;
+  border-radius: 99px;
+  border: 1px solid rgba(124, 58, 237, 0.2);
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(20px);
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.premium-project-card.visible .premium-year {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.premium-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.premium-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 99px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.premium-btn:hover {
+  background: linear-gradient(135deg, #7c3aed, #06b6d4);
+  border-color: transparent;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+}
+
+.premium-btn-pulse {
+  position: relative;
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.premium-btn-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #06b6d4, #7c3aed);
+  z-index: -1;
+  opacity: 0.4;
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.05); opacity: 0; }
+  100% { transform: scale(1); opacity: 0.4; }
+}
+
+.atmosphere-projects::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  right: 5%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatLevitate 8s ease-in-out infinite;
+  z-index: -1;
+}
+
+.atmosphere-projects::after {
+  content: '';
+  position: absolute;
+  bottom: 10%;
+  left: 5%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: floatLevitate 10s ease-in-out infinite reverse;
+  z-index: -1;
+}
+
+.project-timeline-premium {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.project-timeline-premium::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.6), rgba(6, 182, 212, 0.4), transparent);
+  box-shadow: 0 0 10px rgba(124, 58, 237, 0.3);
+  z-index: 0;
+}
