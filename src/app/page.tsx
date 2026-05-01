@@ -115,7 +115,7 @@ export default function Home() {
   };
 
   return (
-    <main className="container">
+    <main className="w-full max-w-[1400px] mx-auto px-6 md:px-12 lg:px-24">
       <section
         id="about"
         ref={heroRef}
