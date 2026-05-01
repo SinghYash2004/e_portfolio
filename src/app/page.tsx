@@ -19,6 +19,7 @@ import ClientTilt from "@/components/ClientTilt";
 import TechnicalSkills from "@/components/TechnicalSkills";
 import MagneticLink from "@/components/MagneticLink";
 import ProjectCard from "@/components/ProjectCard";
+import ProfileImage from "@/components/ProfileImage";
 
 const PROJECTS_DATA = [
   {
@@ -187,27 +188,10 @@ export default function Home() {
         </ClientTilt>
 
         <ClientTilt
-          className="profile-img-container profile-shell-clean hero-profile-wrap animate-profile-entrance reveal"
-          style={{ width: "280px", height: "280px", flexShrink: 0 }}
+          className="animate-profile-entrance reveal"
+          style={{ flexShrink: 0 }}
         >
-          <span className="orbit-particle orbit-one" aria-hidden="true" />
-          <span className="orbit-particle orbit-two" aria-hidden="true" />
-          <span className="orbit-particle orbit-three" aria-hidden="true" />
-          <span className="profile-pulse-ring" aria-hidden="true" />
-          <div className="animate-float" style={{ width: "100%", height: "100%" }}>
-            <div className="profile-aura-wrap">
-              <div className="profile-aura-core">
-                <Image
-                  src="/profile.jpeg"
-                  alt="Yash Pratap Singh"
-                  width={280}
-                  height={280}
-                  className="profile-img shadow-glow profile-image-fit cursor-pointer"
-                  priority
-                />
-              </div>
-            </div>
-          </div>
+          <ProfileImage />
         </ClientTilt>
       </section>
 
