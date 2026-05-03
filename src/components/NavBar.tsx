@@ -1,64 +1,84 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Code2, FolderKanban, GraduationCap, Mail } from "lucide-react";
+import { User, Code2, FolderKanban, GraduationCap, Mail, BookOpen } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
+
+interface NavItem {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  highlight?: boolean;
+}
 
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
 
+  const navItems: NavItem[] = [
+    { id: "about", label: "About", icon: <User size={20} /> },
+    { id: "skills", label: "Skills", icon: <Code2 size={20} /> },
+    { id: "projects", label: "Projects", icon: <FolderKanban size={20} /> },
+    { id: "education", label: "Education", icon: <GraduationCap size={20} /> },
+    { id: "blog", label: "Blog", icon: <BookOpen size={20} /> },
+    { id: "contact", label: "Contact", icon: <Mail size={20} />, highlight: true },
+  ];
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+
+      // Track which section is in view
+      const sections = navItems
+        .map((item) => document.getElementById(item.id))
+        .filter((el): el is HTMLElement => el !== null);
+
+      let currentSection = "about";
+      let minDistance = Infinity;
+
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        const distance = Math.abs(rect.top - window.innerHeight / 3);
+
+        if (distance < minDistance) {
+          minDistance = distance;
+          currentSection = section.id;
+        }
+      });
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const sectionIds = ["about", "skills", "projects", "education", "contact"];
-    const sections = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((section): section is HTMLElement => section !== null);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.45, rootMargin: "-10% 0px -45% 0px" }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <nav className={`floating-nav ${scrolled ? "nav-scrolled" : ""}`}>
       <div className="nav-brand">
-        <span className="font-bold text-lg">Yash P. Singh</span>
+        <span className="font-bold text-sm">Y P S</span>
       </div>
       
       <div className="nav-links">
-        <a href="#about" className={`nav-link ${activeSection === "about" ? "active" : ""}`}>
-          <User size={16} /> <span className="hidden-mobile">About</span>
-        </a>
-        <a href="#skills" className={`nav-link ${activeSection === "skills" ? "active" : ""}`}>
-          <Code2 size={16} /> <span className="hidden-mobile">Skills</span>
-        </a>
-        <a href="#projects" className={`nav-link ${activeSection === "projects" ? "active" : ""}`}>
-          <FolderKanban size={16} /> <span className="hidden-mobile">Projects</span>
-        </a>
-        <a href="#education" className={`nav-link ${activeSection === "education" ? "active" : ""}`}>
-          <GraduationCap size={16} /> <span className="hidden-mobile">Education</span>
-        </a>
-        <a href="#contact" className={`nav-link highlight ${activeSection === "contact" ? "active" : ""}`}>
-          <Mail size={16} /> <span className="hidden-mobile">Contact</span>
-        </a>
+        {navItems.map((item) => {
+          const isActive = activeSection === item.id;
+          return (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`nav-link ${isActive ? "active" : ""} ${item.highlight ? "highlight" : ""}`}
+              title={item.label}
+            >
+              <div className="nav-icon-container">
+                {item.icon}
+                <span className={`nav-label ${isActive ? "active-label" : ""}`}>
+                  {item.label}
+                </span>
+              </div>
+            </a>
+          );
+        })}
+        <ThemeToggle />
       </div>
     </nav>
   );

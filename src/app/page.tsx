@@ -20,6 +20,8 @@ import TechnicalSkills from "@/components/TechnicalSkills";
 import MagneticLink from "@/components/MagneticLink";
 import ProjectCard from "@/components/ProjectCard";
 import ProfileImage from "@/components/ProfileImage";
+import ContactForm from "@/components/ContactForm";
+import BlogSection from "@/components/BlogSection";
 
 const PROJECTS_DATA = [
   {
@@ -311,8 +313,61 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="text-center py-8 text-sm text-muted">
-        <p>&copy; 2026 Yash Pratap Singh. Built with Next.js.</p>
+      <hr className="divider" />
+      <div className="grad-rule" />
+
+      <BlogSection />
+
+      <hr className="divider" />
+      <div className="grad-rule" />
+
+      <ContactForm />
+
+      <hr className="divider" />
+      <div className="grad-rule" />
+
+      <footer className="footer-enhanced">
+        <div className="footer-content">
+          <div className="footer-section">
+            <h3 className="font-bold mb-4">Yash Pratap Singh</h3>
+            <p className="text-muted text-sm">Full-stack developer passionate about solving complex problems with elegant code.</p>
+          </div>
+
+          <div className="footer-section">
+            <h4 className="font-semibold mb-3">Quick Links</h4>
+            <ul className="footer-links">
+              <li><a href="#about" className="text-muted hover:text-white transition">About</a></li>
+              <li><a href="#skills" className="text-muted hover:text-white transition">Skills</a></li>
+              <li><a href="#projects" className="text-muted hover:text-white transition">Projects</a></li>
+              <li><a href="#education" className="text-muted hover:text-white transition">Education</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4 className="font-semibold mb-3">Connect</h4>
+            <ul className="footer-links">
+              <li><a href="https://github.com/SinghYash2004" target="_blank" rel="noreferrer" className="text-muted hover:text-white transition">GitHub</a></li>
+              <li><a href="https://linkedin.com/in/yash-pratap-singh-b43925327/" target="_blank" rel="noreferrer" className="text-muted hover:text-white transition">LinkedIn</a></li>
+              <li><a href="mailto:ys6463@srmist.edu.in" className="text-muted hover:text-white transition">Email</a></li>
+            </ul>
+          </div>
+
+          <div className="footer-section">
+            <h4 className="font-semibold mb-3">Resources</h4>
+            <ul className="footer-links">
+              <li><a href="/resume.pdf" className="text-muted hover:text-white transition">Resume</a></li>
+              <li><a href="#blog" className="text-muted hover:text-white transition">Blog</a></li>
+              <li><a href="#contact" className="text-muted hover:text-white transition">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="footer-divider"></div>
+
+        <div className="footer-bottom">
+          <p className="text-sm text-muted">&copy; 2026 Yash Pratap Singh. All rights reserved.</p>
+          <p className="text-sm text-muted">Built with Next.js 16, React 19 & TypeScript</p>
+        </div>
       </footer>
     </main>
   );
