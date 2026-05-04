@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send, AlertCircle, CheckCircle } from "lucide-react";
+import { Send, AlertCircle, CheckCircle } from "lucide-react";
+import { MdMail } from "react-icons/md";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
+import { FiPhone } from "react-icons/fi";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -145,23 +148,23 @@ export default function ContactForm() {
             
             <div className="contact-methods">
               <a href="mailto:ys6463@srmist.edu.in" className="contact-method-link badge">
-                <Mail size={18} />
+                <MdMail size={18} />
                 <div>
                   <div className="font-semibold">Email</div>
                   <div className="text-sm text-muted">ys6463@srmist.edu.in</div>
                 </div>
               </a>
-              
-              <div className="contact-method badge">
-                <span>📱</span>
+
+              <a href="tel:+917061293059" className="contact-method-link badge">
+                <FiPhone size={18} />
                 <div>
                   <div className="font-semibold">Phone</div>
                   <div className="text-sm text-muted">+91-7061293059</div>
                 </div>
-              </div>
+              </a>
 
               <a href="https://linkedin.com/in/yash-pratap-singh-b43925327/" target="_blank" rel="noreferrer" className="contact-method-link badge">
-                <span>💼</span>
+                <FaLinkedin size={18} />
                 <div>
                   <div className="font-semibold">LinkedIn</div>
                   <div className="text-sm text-muted">Yash Pratap Singh</div>
@@ -169,7 +172,7 @@ export default function ContactForm() {
               </a>
 
               <a href="https://github.com/SinghYash2004" target="_blank" rel="noreferrer" className="contact-method-link badge">
-                <span>💻</span>
+                <FaGithub size={18} />
                 <div>
                   <div className="font-semibold">GitHub</div>
                   <div className="text-sm text-muted">SinghYash2004</div>
@@ -177,7 +180,7 @@ export default function ContactForm() {
               </a>
 
               <a href="https://wa.me/917061293059" target="_blank" rel="noreferrer" className="contact-method-link badge">
-                <span>💬</span>
+                <FaWhatsapp size={18} />
                 <div>
                   <div className="font-semibold">WhatsApp</div>
                   <div className="text-sm text-muted">Message me directly</div>
