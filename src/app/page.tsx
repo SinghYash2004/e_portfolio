@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import dynamic from "next/dynamic";
 import { FaGithub } from "react-icons/fa";
 import {
   Mail,
@@ -23,6 +23,9 @@ import ProfileImage from "@/components/ProfileImage";
 import ContactForm from "@/components/ContactForm";
 import BlogSection from "@/components/BlogSection";
 
+// Lazy-loaded Three.js particle field (client-only)
+const ParticleField = dynamic(() => import("@/components/ParticleField"), { ssr: false });
+
 const PROJECTS_DATA = [
   {
     title: "Compact Multithreaded Web Server",
@@ -30,10 +33,10 @@ const PROJECTS_DATA = [
     tags: ["C++", "Socket Programming", "Multithreading", "Thread Pool", "TCP"],
     descriptionLines: [
       "Developed a lightweight multithreaded HTTP web server in C++ using POSIX sockets to handle concurrent static content requests. Implemented a priority-based thread pool and load-balanced task queue to improve request scheduling and overall server efficiency.",
-      "Presented the paper \"Compact Multithreaded Web Server for Static Request Handling\" at the IEEE-sponsored ICAECT 2026 international conference. The work demonstrates a C++ multithreaded server architecture for efficient concurrent HTTP request handling."
+      "Presented the paper \"Compact Multithreaded Web Server for Static Request Handling\" at the IEEE-sponsored ICAECT 2026 international conference. The work demonstrates a C++ multithreaded server architecture for efficient concurrent HTTP request handling.",
     ],
     githubLink: "https://github.com/SinghYash2004/multi_threaded_web_server.git",
-    paperLink: "https://ieeexplore.ieee.org/document/11426147"
+    paperLink: "https://ieeexplore.ieee.org/document/11426147",
   },
   {
     title: "Intelligent Academic ERP System",
@@ -41,11 +44,20 @@ const PROJECTS_DATA = [
     tags: ["Java", "Spring Boot", "MySQL", "Genetic Algorithm", "Graph Coloring"],
     descriptionLines: [
       "Built a full-stack academic ERP that automates conflict-free timetable generation using three interchangeable scheduling algorithms — Genetic Algorithm, Graph Coloring, and Greedy — with configurable parameters for population size, mutation rate, and constraint weights.",
-      "Engineered a Spring Boot MVC dashboard with role-based authentication, real-time conflict detection, AI-powered risk analysis, financial budget tracking, and exportable reports (CSV/PDF/Excel) backed by a MySQL relational schema with full CRUD operations."
+      "Engineered a Spring Boot MVC dashboard with role-based authentication, real-time conflict detection, AI-powered risk analysis, financial budget tracking, and exportable reports (CSV/PDF/Excel) backed by a MySQL relational schema with full CRUD operations.",
     ],
     githubLink: "https://github.com/SinghYash2004/TimeTableGenerator.git",
-    liveLink: "https://timetablegenerator-595z.onrender.com/"
-  }
+    liveLink: "https://timetablegenerator-595z.onrender.com/",
+  },
+];
+
+const CERTS = [
+  { name: "Research Paper Presentation (ICAECT 2026)", issuer: "IEEE Sponsored Conference", link: "https://ieeexplore.ieee.org/document/11426147" },
+  { name: "Intro to Computer Organization", issuer: "IIIT Hyderabad" },
+  { name: "Web Security & Social Engineering", issuer: "Packt" },
+  { name: "Analysis of Algorithm", issuer: "" },
+  { name: "Data Science Math Skills", issuer: "" },
+  { name: "Sustainable Development in the 21st Century", issuer: "Ban Ki-moon" },
 ];
 
 type RevealStyle = React.CSSProperties & { "--reveal-i": string };
@@ -54,10 +66,14 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const revealStyle = (index: number): RevealStyle => ({ "--reveal-i": String(index) });
 
+  // Track hero-card tilt mouse for particle field parallax
+  const [heroMouse, setHeroMouse] = useState({ x: 0, y: 0 });
+  const handleHeroTiltMouse = useCallback((x: number, y: number) => {
+    setHeroMouse({ x, y });
+  }, []);
+
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
-    const spotlightCards = document.querySelectorAll<HTMLElement>(".project-card-enhanced");
-
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -69,55 +85,28 @@ export default function Home() {
       },
       { threshold: 0.12 }
     );
-
     els.forEach((el) => obs.observe(el));
-
-    const handleSpotlightMove = (event: Event) => {
-      const card = event.currentTarget as HTMLElement;
-      const pointerEvent = event as MouseEvent;
-      const rect = card.getBoundingClientRect();
-      const x = pointerEvent.clientX - rect.left;
-      const y = pointerEvent.clientY - rect.top;
-      card.style.setProperty("--spot-x", `${x}px`);
-      card.style.setProperty("--spot-y", `${y}px`);
-    };
-
-    spotlightCards.forEach((card) => {
-      card.addEventListener("mousemove", handleSpotlightMove);
-    });
-
-    return () => {
-      obs.disconnect();
-      spotlightCards.forEach((card) => {
-        card.removeEventListener("mousemove", handleSpotlightMove);
-      });
-    };
+    return () => obs.disconnect();
   }, []);
 
   const handleHeroParallax: React.MouseEventHandler<HTMLElement> = (event) => {
-    if (!heroRef.current) {
-      return;
-    }
-
+    if (!heroRef.current) return;
     const rect = heroRef.current.getBoundingClientRect();
     const x = (event.clientX - rect.left) / rect.width - 0.5;
     const y = (event.clientY - rect.top) / rect.height - 0.5;
-
     heroRef.current.style.setProperty("--hero-mx", x.toFixed(3));
     heroRef.current.style.setProperty("--hero-my", y.toFixed(3));
   };
 
   const resetHeroParallax = () => {
-    if (!heroRef.current) {
-      return;
-    }
-
+    if (!heroRef.current) return;
     heroRef.current.style.setProperty("--hero-mx", "0");
     heroRef.current.style.setProperty("--hero-my", "0");
   };
 
   return (
     <main className="container">
+      {/* ── HERO ─────────────────────────────────────────────────────── */}
       <section
         id="about"
         ref={heroRef}
@@ -126,22 +115,34 @@ export default function Home() {
         onMouseMove={handleHeroParallax}
         onMouseLeave={resetHeroParallax}
       >
+        {/* Three.js depth particle field */}
+        <ParticleField mouseX={heroMouse.x} mouseY={heroMouse.y} />
+
         <div className="hero-ambient hero-ambient-one" aria-hidden="true" />
         <div className="hero-ambient hero-ambient-two" aria-hidden="true" />
+
+        {/* Hero info card — 3D tilt with holographic depth layers */}
         <ClientTilt
           className="glass-panel animate-sophisticated hero-copy-shell section-panel"
           style={{ flex: 1, padding: "4rem 3rem" }}
+          maxAngle={10}
+          onMouseMove={handleHeroTiltMouse}
         >
-          <div className="avail-pill">
+          <div className="avail-pill depth-1">
             <span className="avail-dot" />
             <span>Open to opportunities</span>
           </div>
-          <h1 className="text-5xl font-bold mb-3 animate-title hero-heading">
+
+          <h1 className="text-5xl font-bold mb-3 animate-title hero-heading depth-3">
             Hi, I&apos;m <span className="shimmer-text gradient-name">Yash Pratap Singh</span>
           </h1>
-          <Typewriter />
+
+          <div className="depth-2">
+            <Typewriter />
+          </div>
+
           <p
-            className="text-muted text-lg animate-sophisticated delay-2 hero-lead"
+            className="text-muted text-lg animate-sophisticated delay-2 hero-lead depth-1"
             style={{ maxWidth: "600px" }}
           >
             B.Tech Computer Science student with a working knowledge of programming and software
@@ -149,21 +150,17 @@ export default function Home() {
             efficient software solutions.
           </p>
 
-          <div id="contact" className="contact-links mt-8 animate-sophisticated delay-3">
+          <div id="contact" className="contact-links mt-8 animate-sophisticated delay-3 depth-1">
             <MagneticLink
               href="mailto:ys6463@srmist.edu.in"
               className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
               <Mail size={16} /> ys6463@srmist.edu.in
             </MagneticLink>
-            <span
-              className="contact-link badge hover:scale-105 transition-transform duration-300"
-            >
+            <span className="contact-link badge hover:scale-105 transition-transform duration-300">
               <Phone size={16} /> +91-7061293059
             </span>
-            <span
-              className="contact-link badge hover:scale-105 transition-transform duration-300"
-            >
+            <span className="contact-link badge hover:scale-105 transition-transform duration-300">
               <MapPin size={16} /> Tiruchirappalli, TN, India
             </span>
             <MagneticLink
@@ -183,15 +180,20 @@ export default function Home() {
               <FaGithub size={16} /> GitHub
             </MagneticLink>
           </div>
-          <MagneticLink href="/resume.pdf" download className="btn-resume mt-4 primary-cta" >
-            <Download size={14} />
-            Download Resume
-          </MagneticLink>
+
+          <div className="depth-2">
+            <MagneticLink href="/resume.pdf" download className="btn-resume mt-4 primary-cta">
+              <Download size={14} />
+              Download Resume
+            </MagneticLink>
+          </div>
         </ClientTilt>
 
+        {/* Profile image — counter-tilts slightly */}
         <ClientTilt
           className="animate-profile-entrance reveal"
           style={{ flexShrink: 0 }}
+          maxAngle={8}
         >
           <ProfileImage />
         </ClientTilt>
@@ -200,6 +202,7 @@ export default function Home() {
       <hr className="divider hero-divider" style={{ marginTop: "0" }} />
       <div className="grad-rule hero-divider" />
 
+      {/* ── SKILLS ───────────────────────────────────────────────────── */}
       <section id="skills" className="animate-fade-in delay-1 reveal section-shell section-shell-skills">
         <div className="section-atmosphere atmosphere-skills" aria-hidden="true" />
         <TechnicalSkills />
@@ -208,13 +211,13 @@ export default function Home() {
       <hr className="divider" />
       <div className="grad-rule" />
 
+      {/* ── PROJECTS ─────────────────────────────────────────────────── */}
       <section id="projects" className="animate-fade-in delay-2 project-showcase reveal section-shell section-shell-projects">
         <div className="section-atmosphere atmosphere-projects" aria-hidden="true" />
         <div className="flex items-center gap-2 mb-8 section-divider reveal masked-section-header" style={revealStyle(0)}>
           <Star className="gradient-text" size={32} />
-          <h2 className="text-3xl font-bold">Projects & Achievements</h2>
+          <h2 className="text-3xl font-bold">Projects &amp; Achievements</h2>
         </div>
-
         <div className="project-timeline-premium">
           {PROJECTS_DATA.map((project, index) => (
             <ProjectCard key={index} index={index} {...project} />
@@ -225,9 +228,11 @@ export default function Home() {
       <hr className="divider" />
       <div className="grad-rule" />
 
+      {/* ── EDUCATION ────────────────────────────────────────────────── */}
       <section id="education" className="animate-fade-in delay-3 reveal section-shell section-shell-education">
         <div className="section-atmosphere atmosphere-education" aria-hidden="true" />
         <div className="grid grid-cols-2 gap-8">
+          {/* Education timeline */}
           <div>
             <div className="flex items-center gap-2 mb-6 section-divider reveal masked-section-header" style={revealStyle(1)}>
               <GraduationCap className="gradient-text" size={28} />
@@ -236,9 +241,7 @@ export default function Home() {
             <div className="timeline edu-timeline reveal timeline-draw">
               <div className="timeline-item edu-entry reveal" style={revealStyle(0)}>
                 <h3 className="text-lg font-bold">Bachelor of Technology in Computer Science</h3>
-                <p className="text-muted font-medium">
-                  SRM Institute of Science and Technology (SRMIST)
-                </p>
+                <p className="text-muted font-medium">SRM Institute of Science and Technology (SRMIST)</p>
                 <p className="text-sm text-muted">07/2024 - 07/2028 | Trichy, India</p>
               </div>
               <div className="timeline-item edu-entry reveal" style={revealStyle(1)}>
@@ -254,6 +257,7 @@ export default function Home() {
             </div>
           </div>
 
+          {/* Coursework + Certifications */}
           <div>
             <div className="flex items-center gap-2 mb-6 section-divider reveal masked-section-header" style={revealStyle(2)}>
               <BookOpen className="gradient-text" size={28} />
@@ -261,7 +265,7 @@ export default function Home() {
             </div>
             <div className="glass-panel reveal section-panel" style={revealStyle(3)}>
               <div className="flex flex-wrap gap-2">
-                <span className="cw-tag">Data Structures & Algorithms</span>
+                <span className="cw-tag">Data Structures &amp; Algorithms</span>
                 <span className="cw-tag">Operating Systems</span>
                 <span className="cw-tag">Database Management (DBMS)</span>
                 <span className="cw-tag">Object-Oriented Programming</span>
@@ -282,32 +286,32 @@ export default function Home() {
                 gap: "10px",
               }}
             >
-              <div className="cert-card-styled reveal" style={revealStyle(0)}>
-                <div className="cert-name">Research Paper Presentation (ICAECT 2026)</div>
-                <div className="cert-issuer">
-                  <a href="https://ieeexplore.ieee.org/document/11426147" target="_blank" rel="noreferrer">
-                    IEEE Sponsored Conference
-                  </a>
+              {CERTS.map((cert, i) => (
+                <div key={i} className="cert-flip-outer reveal" style={revealStyle(i)}>
+                  <div className="cert-flip-inner">
+                    {/* Front face */}
+                    <div className="cert-flip-front cert-card-styled">
+                      <div className="cert-name">{cert.name}</div>
+                      {cert.issuer && (
+                        <div className="cert-issuer">
+                          {cert.link ? (
+                            <a href={cert.link} target="_blank" rel="noreferrer">{cert.issuer}</a>
+                          ) : (
+                            cert.issuer
+                          )}
+                        </div>
+                      )}
+                    </div>
+                    {/* Back face */}
+                    <div className="cert-flip-back">
+                      <div className="cert-back-glow" aria-hidden="true" />
+                      <span className="cert-verified-icon">✦</span>
+                      <p className="cert-back-name">{cert.name}</p>
+                      <span className="cert-badge">Verified ✓</span>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="cert-card-styled reveal" style={revealStyle(1)}>
-                <div className="cert-name">Intro to Computer Organization</div>
-                <div className="cert-issuer">IIIT Hyderabad</div>
-              </div>
-              <div className="cert-card-styled reveal" style={revealStyle(2)}>
-                <div className="cert-name">Web Security & Social Engineering</div>
-                <div className="cert-issuer">Packt</div>
-              </div>
-              <div className="cert-card-styled reveal" style={revealStyle(3)}>
-                <div className="cert-name">Analysis of Algorithm</div>
-              </div>
-              <div className="cert-card-styled reveal" style={revealStyle(4)}>
-                <div className="cert-name">Data Science Math Skills</div>
-              </div>
-              <div className="cert-card-styled reveal" style={revealStyle(5)}>
-                <div className="cert-name">Sustainable Development in the 21st Century</div>
-                <div className="cert-issuer">Ban Ki-moon</div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -366,7 +370,7 @@ export default function Home() {
 
         <div className="footer-bottom">
           <p className="text-sm text-muted">&copy; 2026 Yash Pratap Singh. All rights reserved.</p>
-          <p className="text-sm text-muted">Built with Next.js 16, React 19 & TypeScript</p>
+          <p className="text-sm text-muted">Built with Next.js 16, React 19 &amp; TypeScript</p>
         </div>
       </footer>
     </main>
