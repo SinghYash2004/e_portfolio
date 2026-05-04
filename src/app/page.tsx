@@ -139,7 +139,7 @@ export default function Home() {
             efficient software solutions.
           </p>
 
-          <div id="contact" className="contact-links mt-8 animate-sophisticated delay-3 depth-1">
+          <div className="contact-links mt-8 animate-sophisticated delay-3 depth-1">
             <MagneticLink
               href="mailto:ys6463@srmist.edu.in"
               className="contact-link badge hover:scale-105 transition-transform duration-300"

@@ -476,6 +476,7 @@ hr.divider {
   flex-direction: column;
   position: relative;
   padding: 0.5rem;
+  border: 1px solid transparent;
   border-radius: 12px;
 }
 
@@ -510,12 +511,22 @@ hr.divider {
 
 .nav-link.active {
   color: var(--primary);
+  background: rgba(99, 102, 241, 0.12);
+  border-color: rgba(99, 102, 241, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(99, 102, 241, 0.08) inset,
+    0 10px 28px rgba(99, 102, 241, 0.18);
+  animation: activeNavFocus 2.6s ease-in-out infinite;
 }
 
 .nav-link.active svg {
   color: var(--primary);
   filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.6));
   animation: activeGlow 2s ease-in-out infinite;
+}
+
+.nav-link.active .nav-icon-container {
+  animation: activeIconLift 2.6s ease-in-out infinite;
 }
 
 @keyframes activeGlow {
@@ -527,12 +538,34 @@ hr.divider {
   }
 }
 
+@keyframes activeNavFocus {
+  0%, 100% {
+    box-shadow:
+      0 0 0 1px rgba(99, 102, 241, 0.08) inset,
+      0 10px 28px rgba(99, 102, 241, 0.18);
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(129, 140, 248, 0.2) inset,
+      0 14px 34px rgba(99, 102, 241, 0.32);
+  }
+}
+
+@keyframes activeIconLift {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
 .nav-link.highlight {
-  background: rgba(99, 102, 241, 0.1);
-  padding: 0.5rem;
-  border-radius: 12px;
+  color: var(--text-muted);
+}
+
+.nav-link.highlight.active {
   color: var(--primary);
-  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .cursor-blink {

@@ -1,9 +1,83 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 
 export default function ProfileImage() {
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const ringRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const wrapper = wrapperRef.current;
+    const img = imgRef.current;
+    const ring = ringRef.current;
+    if (!wrapper || !img || !ring) return;
+
+    let raf = 0;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = wrapper.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
+      const py = (e.clientY - rect.top) / rect.height - 0.5;
+
+      // gentle tilt and parallax
+      const rotateY = px * 8; // degrees
+      const rotateX = -py * 8;
+      const translateX = px * 6; // px
+      const translateY = py * 6;
+
+      // apply transforms smoothly
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        wrapper.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        img.style.transform = `translate3d(${translateX}px, ${translateY}px, 10px) scale(1.03)`;
+        ring.style.transform = `rotate(${rotateY * 2}deg)`; // subtle linked rotation
+      });
+    };
+
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      wrapper.style.transform = "none";
+      img.style.transform = "none";
+      ring.style.transform = "none";
+    };
+
+    wrapper.addEventListener("mousemove", onMove);
+    wrapper.addEventListener("mouseleave", onLeave);
+
+    return () => {
+      wrapper.removeEventListener("mousemove", onMove);
+      wrapper.removeEventListener("mouseleave", onLeave);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  // helper: create a small burst of dots on hover
+  const createBurst = (clientX?: number, clientY?: number) => {
+    const wrapper = wrapperRef.current;
+    if (!wrapper) return;
+    const count = 10;
+    const rect = wrapper.getBoundingClientRect();
+    const cx = clientX ? clientX - rect.left : rect.width / 2;
+    const cy = clientY ? clientY - rect.top : rect.height / 2;
+
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement("span");
+      dot.className = "burst-dot";
+      dot.style.left = `${cx}px`;
+      dot.style.top = `${cy}px`;
+      const hue = i % 2 === 0 ? "200" : "275";
+      dot.style.background = `hsl(${hue}deg 80% 60% / 1)`;
+      dot.style.transform = `translate(-50%, -50%) scale(${0.6 + Math.random() * 0.8})`;
+      wrapper.appendChild(dot);
+      // remove after animation
+      dot.addEventListener("animationend", () => dot.remove());
+    }
+  };
+
+  const handleMouseEnter = (e: React.MouseEvent) => createBurst(e.clientX, e.clientY);
+  const handleClick = (e: React.MouseEvent) => createBurst(e.clientX, e.clientY);
   return (
     <>
       <style dangerouslySetInnerHTML={{
