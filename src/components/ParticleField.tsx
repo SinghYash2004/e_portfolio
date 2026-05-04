@@ -87,7 +87,7 @@ export default function ParticleField() {
       size: 0.02,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.05,
+      opacity: 0.02,
       depthWrite: false,
     });
     const fogCount = Math.floor(5000 * particleMultiplier);
@@ -106,7 +106,7 @@ export default function ParticleField() {
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x67e8f9,
       transparent: true,
-      opacity: 0.1,
+      opacity: 0.05,
       depthWrite: false,
     });
     const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
@@ -268,10 +268,14 @@ export default function ParticleField() {
     // ── Animation loop ──────────────────────────────────────────────────────────
     let animId: number;
     const start = performance.now();
+    const fadeInDuration = 3; // 3 seconds fade-in
 
     const animate = () => {
       animId = requestAnimationFrame(animate);
       const t = (performance.now() - start) * 0.001;
+      
+      // Calculate fade-in progress (0 to 1 over 3 seconds)
+      const fadeInProgress = Math.min(t / fadeInDuration, 1);
 
       // Mouse movement strength for responsiveness
       const mouseStrength = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy) * 10;
@@ -292,19 +296,22 @@ export default function ParticleField() {
       near.points.rotation.y = t * 0.100 + mouse.x * 0.50;
       near.points.rotation.x =             mouse.y * 0.35;
 
-      // ENHANCEMENT 6: Advanced animations - Breathing waves
+      // ENHANCEMENT 6: Advanced animations - Breathing waves with smooth fade-in
       const breathingWave = Math.sin(t * 0.4) * 0.5 + 0.5;
       
-      // ENHANCEMENT 3: Twinkling effect
-      (far.points.material as THREE.PointsMaterial).opacity = 0.70 + 0.25 * Math.sin(t * 0.6) + breathingWave * 0.15;
-      (mid.points.material as THREE.PointsMaterial).opacity = 0.80 + 0.20 * Math.sin(t * 0.8 + 1) + breathingWave * 0.10;
-      (near.points.material as THREE.PointsMaterial).opacity = 0.90 + 0.10 * Math.sin(t * 1.0 + 2) + breathingWave * 0.08;
+      // Apply fade-in and breathing to opacity
+      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.55 + 0.20 * Math.sin(t * 0.6) + breathingWave * 0.12);
+      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.65 + 0.15 * Math.sin(t * 0.8 + 1) + breathingWave * 0.08);
+      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.75 + 0.08 * Math.sin(t * 1.0 + 2) + breathingWave * 0.06);
 
       // ENHANCEMENT 6: Color bloom effect (subtle hue rotation)
       const hueShift = Math.sin(t * 0.2) * 0.02;
       (far.points.material as THREE.PointsMaterial).color.setHSL(0.75 + hueShift, 0.8, 0.75);
       (mid.points.material as THREE.PointsMaterial).color.setHSL(0.55 + hueShift, 0.9, 0.60);
       (near.points.material as THREE.PointsMaterial).color.setHSL(0.80 + hueShift, 0.85, 0.65);
+
+      // Update fog particles opacity for fade-in effect
+      (fogMaterial).opacity = fadeInProgress * 0.02;
 
       // Update fog particles position for depth effect
       const fogPos = fogGeometry.attributes.position as THREE.BufferAttribute;
@@ -314,6 +321,9 @@ export default function ParticleField() {
         if (fogArray[i + 2] > -3) fogArray[i + 2] = -8;
       }
       fogPos.needsUpdate = true;
+
+      // Update line material opacity for fade-in effect
+      (lineMaterial).opacity = fadeInProgress * 0.05;
 
       renderer.render(scene, camera);
     };
