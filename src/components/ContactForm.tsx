@@ -175,6 +175,14 @@ export default function ContactForm() {
                   <div className="text-sm text-muted">SinghYash2004</div>
                 </div>
               </a>
+
+              <a href="https://wa.me/917061293059" target="_blank" rel="noreferrer" className="contact-method-link badge">
+                <span>💬</span>
+                <div>
+                  <div className="font-semibold">WhatsApp</div>
+                  <div className="text-sm text-muted">Message me directly</div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
