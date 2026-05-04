@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { User, Code2, FolderKanban, GraduationCap, Mail, BookOpen } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 
 interface NavItem {
@@ -23,8 +24,10 @@ const NAV_ITEMS: NavItem[] = [
 export default function NavBar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("about");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
 
@@ -63,13 +66,15 @@ export default function NavBar() {
     };
   }, []);
 
+  if (!mounted) return null;
+
   return (
     <nav className={`floating-nav ${scrolled ? "nav-scrolled" : ""}`}>
       <div className="nav-brand">
         <span className="font-bold text-sm">Y P S</span>
       </div>
       
-      <div className="nav-links">
+      <div className="nav-links" style={{ position: "relative" }}>
         {NAV_ITEMS.map((item) => {
           const isActive = activeSection === item.id;
           return (
@@ -80,7 +85,19 @@ export default function NavBar() {
               title={item.label}
               aria-current={isActive ? "true" : undefined}
             >
-              <div className="nav-icon-container">
+              {isActive && (
+                <motion.div
+                  layoutId="active-nav-indicator"
+                  className="nav-active-indicator"
+                  initial={false}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30,
+                  }}
+                />
+              )}
+              <div className="nav-icon-container" style={{ zIndex: 1 }}>
                 {item.icon}
                 <span className={`nav-label ${isActive ? "active-label" : ""}`}>
                   {item.label}
