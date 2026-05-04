@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
+import ParticleFieldWrapper from "@/components/ParticleFieldWrapper";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
@@ -67,6 +68,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="antialiased">
+        {/* Global particle field — covers the whole page as a fixed background */}
+        <ParticleFieldWrapper />
         <CustomCursor />
         <NavBar />
         {children}

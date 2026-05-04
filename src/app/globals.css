@@ -54,6 +54,8 @@ a:hover {
   max-width: var(--layout-max-width);
   margin: 0 auto;
   padding: 0 2rem 0 5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .gradient-text {
@@ -693,7 +695,7 @@ hr.divider {
 }
 
 /* Hero aurora background glows */
-.hero-section { position: relative; overflow: hidden; }
+.hero-section { position: relative; overflow: visible; }
 .hero-section::before {
   content: ''; position: absolute; top: -80px; right: -60px;
   width: 420px; height: 420px; border-radius: 50%;

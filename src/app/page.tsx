@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import dynamic from "next/dynamic";
+import React, { useEffect, useRef } from "react";
 import { FaGithub } from "react-icons/fa";
 import {
   Mail,
@@ -23,8 +22,6 @@ import ProfileImage from "@/components/ProfileImage";
 import ContactForm from "@/components/ContactForm";
 import BlogSection from "@/components/BlogSection";
 
-// Lazy-loaded Three.js particle field (client-only)
-const ParticleField = dynamic(() => import("@/components/ParticleField"), { ssr: false });
 
 const PROJECTS_DATA = [
   {
@@ -66,11 +63,6 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const revealStyle = (index: number): RevealStyle => ({ "--reveal-i": String(index) });
 
-  // Track hero-card tilt mouse for particle field parallax
-  const [heroMouse, setHeroMouse] = useState({ x: 0, y: 0 });
-  const handleHeroTiltMouse = useCallback((x: number, y: number) => {
-    setHeroMouse({ x, y });
-  }, []);
 
   useEffect(() => {
     const els = document.querySelectorAll(".reveal");
@@ -115,8 +107,6 @@ export default function Home() {
         onMouseMove={handleHeroParallax}
         onMouseLeave={resetHeroParallax}
       >
-        {/* Three.js depth particle field */}
-        <ParticleField mouseX={heroMouse.x} mouseY={heroMouse.y} />
 
         <div className="hero-ambient hero-ambient-one" aria-hidden="true" />
         <div className="hero-ambient hero-ambient-two" aria-hidden="true" />
@@ -126,7 +116,6 @@ export default function Home() {
           className="glass-panel animate-sophisticated hero-copy-shell section-panel"
           style={{ flex: 1, padding: "4rem 3rem" }}
           maxAngle={10}
-          onMouseMove={handleHeroTiltMouse}
         >
           <div className="avail-pill depth-1">
             <span className="avail-dot" />
