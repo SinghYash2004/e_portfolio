@@ -2,9 +2,9 @@
 
 import React, { useEffect, useRef } from "react";
 import { FaGithub } from "react-icons/fa";
+import { MdMail } from "react-icons/md";
+import { FiPhone } from "react-icons/fi";
 import {
-  Mail,
-  Phone,
   MapPin,
   Link as LinkIcon,
   Download,
@@ -144,10 +144,10 @@ export default function Home() {
               href="mailto:ys6463@srmist.edu.in"
               className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
-              <Mail size={16} /> ys6463@srmist.edu.in
+              <MdMail size={16} /> ys6463@srmist.edu.in
             </MagneticLink>
             <span className="contact-link badge hover:scale-105 transition-transform duration-300">
-              <Phone size={16} /> +91-7061293059
+              <FiPhone size={16} /> +91-7061293059
             </span>
             <span className="contact-link badge hover:scale-105 transition-transform duration-300">
               <MapPin size={16} /> Tiruchirappalli, TN, India

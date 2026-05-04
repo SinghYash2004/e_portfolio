@@ -53,7 +53,7 @@ export default function ContactForm() {
       <div className="section-atmosphere atmosphere-contact" aria-hidden="true" />
       
       <div className="flex items-center gap-2 mb-8 section-divider reveal masked-section-header">
-        <Mail className="gradient-text" size={32} />
+        <MdMail className="gradient-text" size={32} />
         <h2 className="text-3xl font-bold">Get In Touch</h2>
       </div>
 
