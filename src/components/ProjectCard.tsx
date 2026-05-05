@@ -63,7 +63,8 @@ export default function ProjectCard({
 
     setTiltStyle({
       transform: `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateY(-8px) scale(1.02)`,
-      transition: "transform 0.08s ease-out",
+      transition: "transform 0.08s ease-out, filter 0.08s ease-out",
+      filter: "drop-shadow(0 0 15px rgba(99, 102, 241, 0.2))",
     });
   }, []);
 
@@ -72,6 +73,7 @@ export default function ProjectCard({
     setTiltStyle({
       transform: "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)",
       transition: "transform 0.55s cubic-bezier(0.2,0.8,0.2,1)",
+      filter: "blur(0px)",
     });
   }, []);
 

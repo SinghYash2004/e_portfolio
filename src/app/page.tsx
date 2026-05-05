@@ -104,6 +104,7 @@ export default function Home() {
         ref={heroRef}
         className="hero-section hero-flex flex justify-between gap-8 items-center relative reveal"
         style={{ paddingTop: "6rem", paddingBottom: "4rem" }}
+        // Mobile overrides handled in globals.css via @media
         onMouseMove={handleHeroParallax}
         onMouseLeave={resetHeroParallax}
       >
@@ -122,16 +123,16 @@ export default function Home() {
             <span>Open to opportunities</span>
           </div>
 
-          <h1 className="text-5xl font-bold mb-3 animate-title hero-heading depth-3">
-            Hi, I&apos;m <span className="shimmer-text gradient-name">Yash Pratap Singh</span>
+          <h1 className="text-5xl font-bold mb-3 animate-title hero-heading depth-3 animate-hero-stagger-1">
+            Hi, I&apos;m <span className="shimmer-text enhanced-shimmer gradient-name">Yash Pratap Singh</span>
           </h1>
 
-          <div className="depth-2">
+          <div className="depth-2 animate-hero-stagger-2">
             <Typewriter />
           </div>
 
           <p
-            className="text-muted text-lg animate-sophisticated delay-2 hero-lead depth-1"
+            className="text-muted text-lg animate-sophisticated delay-2 hero-lead depth-1 animate-hero-stagger-3"
             style={{ maxWidth: "600px" }}
           >
             B.Tech Computer Science student with a working knowledge of programming and software
@@ -269,9 +270,10 @@ export default function Home() {
               <h2 className="text-2xl font-bold">Certifications</h2>
             </div>
             <div
+              className="cert-grid-responsive"
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))",
+                gridTemplateColumns: "repeat(auto-fill,minmax(180px,1fr))",
                 gap: "10px",
               }}
             >

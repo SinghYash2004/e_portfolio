@@ -58,6 +58,15 @@ a:hover {
   z-index: 1;
 }
 
+/* Mobile: nav moves to bottom, remove left padding compensation */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+    /* Extra bottom padding so content clears the mobile bottom nav */
+    padding-bottom: 80px;
+  }
+}
+
 .gradient-text {
   background: var(--primary-gradient);
   -webkit-background-clip: text;
@@ -122,7 +131,7 @@ a:hover {
 @keyframes sophisticatedSlideUp {
   0% {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(35px);
     filter: blur(10px);
   }
   100% {
@@ -135,8 +144,8 @@ a:hover {
 @keyframes titleReveal {
   0% {
     opacity: 0;
-    transform: translateY(20px) skewY(1deg);
-    filter: blur(12px);
+    transform: translateY(25px) skewY(0.5deg);
+    filter: blur(10px);
   }
   100% {
     opacity: 1;
@@ -148,14 +157,20 @@ a:hover {
 @keyframes profileEntrance {
   0% {
     opacity: 0;
-    transform: scale(0.85) translateY(30px) rotate(-3deg);
-    filter: blur(15px);
+    transform: scale(0.88) translateY(35px) rotateY(15deg);
+    filter: blur(12px);
   }
   100% {
     opacity: 1;
-    transform: scale(1) translateY(0) rotate(0deg);
+    transform: scale(1) translateY(0) rotateY(0deg);
     filter: blur(0);
   }
+}
+
+.animate-profile-entrance {
+  opacity: 0;
+  animation: profileEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.4s;
 }
 
 @keyframes floatLevitate {
@@ -167,6 +182,100 @@ a:hover {
   0% { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
+
+/* ✨ ENHANCED GRADIENT TEXT SHIMMER FOR HERO HEADING */
+@keyframes enhancedGradientShimmer {
+  0% {
+    background-position: -200% center;
+    filter: drop-shadow(0 0 8px rgba(167, 139, 250, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(99, 102, 241, 0.5)) drop-shadow(0 0 8px rgba(168, 85, 247, 0.4));
+  }
+  100% {
+    background-position: 200% center;
+    filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.3));
+  }
+}
+
+.shimmer-text.enhanced-shimmer {
+  animation: enhancedGradientShimmer 6s linear infinite;
+  background-size: 200% auto;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* 🎯 STAGGERED HERO ENTRANCE ANIMATIONS */
+@keyframes heroElementStagger {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+.animate-hero-stagger {
+  opacity: 0;
+  animation: heroElementStagger 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-hero-stagger-1 { animation-delay: 0.15s; }
+.animate-hero-stagger-2 { animation-delay: 0.35s; }
+.animate-hero-stagger-3 { animation-delay: 0.55s; }
+
+/* 🎨 PROJECTCARD HOVER WITH BLUR + SCALE */
+@keyframes projectCardHoverBlur {
+  0% {
+    transform: translateY(-8px) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    transform: translateY(-12px) scale(1.05);
+    filter: blur(0);
+  }
+}
+
+.project-card-blur-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              filter 0.4s ease;
+}
+
+.project-card-blur-hover:hover {
+  transform: translateY(-12px) scale(1.05);
+  filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.3));
+}
+
+/* 🌊 ENHANCED SCROLL REVEAL WITH MORE IMPACT */
+@keyframes scrollRevealEnhanced {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) translateX(-10px);
+    filter: blur(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) translateX(0);
+    filter: blur(0);
+  }
+}
+
+.reveal-enhanced {
+  opacity: 0;
+  animation: scrollRevealEnhanced 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: calc(var(--reveal-i, 0) * 0.1s);
+}
+
+.reveal-enhanced.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ✨ SMOOTH LANDING ANIMATIONS */
 
 .animate-fade-in {
   opacity: 0;
@@ -186,12 +295,13 @@ a:hover {
 /* High-End Hero Animations */
 .animate-title {
   opacity: 0;
-  animation: titleReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: titleReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  animation-delay: 0.15s;
 }
 
 .animate-sophisticated {
   opacity: 0;
-  animation: sophisticatedSlideUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: sophisticatedSlideUp 0.95s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
 .animate-profile-entrance {
@@ -292,6 +402,20 @@ section {
   flex-wrap: nowrap;
 }
 
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: auto;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    /* Override the inline paddingTop: 6rem which is for desktop nav clearance */
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+}
+
 .contact-links {
   display: grid;
   grid-template-columns: repeat(2, minmax(220px, max-content));
@@ -369,10 +493,12 @@ hr.divider {
   .hero-flex {
     flex-direction: column-reverse;
     text-align: center;
+    align-items: center;
   }
   .contact-links {
     grid-template-columns: 1fr;
     justify-content: center;
+    justify-items: center;
     max-width: 100%;
   }
   .grid-cols-2, .grid-cols-3 {
@@ -449,6 +575,85 @@ hr.divider {
   width: auto;
   max-width: none;
   transition: all 0.3s ease;
+}
+
+/* ── MOBILE BOTTOM NAV ── */
+@media (max-width: 768px) {
+  .floating-nav {
+    /* Move to bottom of screen as a horizontal tab bar */
+    left: 0 !important;
+    right: 0 !important;
+    top: auto !important;
+    bottom: 0 !important;
+    transform: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 16px 16px 0 0 !important;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    padding: 0.5rem 0.25rem !important;
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom)) !important;
+    gap: 0 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: none !important;
+    background: rgba(10, 12, 18, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+  }
+
+  .nav-brand {
+    display: none !important;
+  }
+
+  .nav-links {
+    flex-direction: row !important;
+    gap: 0 !important;
+    justify-content: space-around !important;
+    width: 100% !important;
+    align-items: center !important;
+  }
+
+  .nav-link {
+    flex: 1 !important;
+    flex-direction: column !important;
+    padding: 0.3rem 0.15rem !important;
+    gap: 0.1rem !important;
+    border-radius: 10px !important;
+    font-size: 0.6rem !important;
+    min-width: 0 !important;
+  }
+
+  .nav-link:hover,
+  .nav-link.active {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  .nav-label {
+    font-size: 0.55rem !important;
+    opacity: 1 !important;
+    transform: none !important;
+    letter-spacing: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .nav-icon-container {
+    gap: 0.1rem !important;
+    align-items: center !important;
+  }
+
+  .nav-active-indicator {
+    border-radius: 8px !important;
+  }
+
+  .theme-toggle {
+    width: 32px !important;
+    height: 32px !important;
+    margin-top: 0 !important;
+    flex-shrink: 0 !important;
+  }
 }
 
 .nav-scrolled {
@@ -610,13 +815,10 @@ hr.divider {
   .hidden-mobile {
     display: none;
   }
-  .floating-nav {
-    gap: 0.8rem;
-    padding: 1.5rem 0.5rem;
-    left: 0.5rem;
-  }
-  .nav-brand {
-    display: none;
+  /* On very small screens, reduce icon size slightly */
+  .nav-link svg {
+    width: 18px;
+    height: 18px;
   }
 }
 
@@ -861,6 +1063,7 @@ hr.divider {
   .hero-profile-wrap {
     margin-left: auto;
     margin-right: auto;
+    flex: 0 0 auto;
   }
 }
 
@@ -1369,6 +1572,41 @@ hr.divider {
 
   .hero-copy-shell {
     align-items: center;
+    padding: 2rem 1.5rem !important;
+    flex: 1 1 100%;
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero-heading {
+    font-size: clamp(1.6rem, 7vw, 2.4rem) !important;
+    text-align: center;
+    max-width: 100% !important;
+  }
+
+  .hero-lead {
+    text-align: center;
+    max-width: 100% !important;
+  }
+
+  .avail-pill {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .contact-links {
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .contact-link {
+    justify-content: center;
+  }
+
+  .btn-resume {
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
   }
 }
 
@@ -1530,6 +1768,67 @@ hr.divider {
 @media (max-width: 768px) {
   .depth-1, .depth-2, .depth-3 { transform: none; }
   .cert-flip-outer:hover .cert-flip-inner { transform: none; }
+
+  /* Project cards — no translateZ 3D on mobile */
+  .premium-project-card {
+    margin-bottom: 1.5rem;
+  }
+
+  .premium-project-card:hover {
+    transform: none;
+  }
+
+  .premium-title {
+    font-size: 1.25rem;
+  }
+
+  .premium-bullet-item {
+    font-size: 0.95rem;
+  }
+
+  /* Education grid — single column */
+  .grid.grid-cols-2 {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Project timeline premium — reduce left padding */
+  .project-timeline-premium {
+    padding-left: 0.75rem;
+  }
+
+  /* Section padding */
+  section {
+    padding: 2.5rem 0;
+  }
+
+  /* Text adjustments */
+  .text-5xl, h1.hero-heading {
+    font-size: clamp(1.6rem, 8vw, 2.4rem);
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .text-4xl {
+    font-size: 1.75rem;
+  }
+
+  /* Cert cards grid — single column on smallest */
+  .cert-grid-responsive {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Footer */
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    padding: 0 1rem 2rem;
+  }
+
+  .footer-bottom {
+    padding: 1rem 1rem 0;
+  }
 }
 
 /* --- NEW PREMIUM PROJECT CARDS REDESIGN --- */
@@ -1575,9 +1874,10 @@ hr.divider {
 }
 
 .premium-project-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-12px) scale(1.05);
   border-left-color: rgba(124, 58, 237, 0.9);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(124, 58, 237, 0.15);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(124, 58, 237, 0.25), 0 0 50px rgba(99, 102, 241, 0.15);
+  filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.2));
 }
 
 .premium-project-card:hover::before {
@@ -2203,6 +2503,52 @@ hr.divider {
 
   .hidden-mobile {
     display: none;
+  }
+
+  /* Contact info: ensure contact links wrap properly */
+  .contact-method-link,
+  .contact-method {
+    flex-wrap: wrap;
+  }
+
+  /* Blog grid minimum width — prevent cards from being too wide */
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Form submit btn full width */
+  .form-submit-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .contact-links {
+    grid-template-columns: 1fr;
+  }
+
+  .premium-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .premium-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Certification cards on very small screens */
+  .cert-flip-outer {
+    min-height: 80px;
+  }
+
+  .cert-flip-inner {
+    min-height: 80px;
   }
 }
 
