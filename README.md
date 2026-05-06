@@ -1,7 +1,6 @@
 # 🎯 Personal E-Portfolio - Yash Pratap Singh
 
 A modern, interactive portfolio website built with **Next.js 16**, **React 19**, and **TypeScript**. Designed to showcase technical skills, projects, education, and professional achievements with smooth animations and responsive design.
-
 ![Next.js](https://img.shields.io/badge/Next.js-16.2.4-000000?style=flat-square&logo=next.js)
 ![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript)

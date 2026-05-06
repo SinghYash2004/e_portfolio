@@ -29,7 +29,7 @@ export default function ParticleField() {
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000, 0);
+    renderer.setClearColor(0x050810, 0.1); // Deep blue-dark background
     mount.appendChild(renderer.domElement);
 
     // ── Global mouse tracking (across whole page) ─────────────────────────────
@@ -48,24 +48,24 @@ export default function ParticleField() {
     const createMultipleGlowTextures = () => {
       const textures = [];
       const variations = [
-        { sharpness: 0.5, maxAlpha: 1 },
-        { sharpness: 0.3, maxAlpha: 0.8 },
-        { sharpness: 0.7, maxAlpha: 0.9 },
+        { sharpness: 0.4, maxAlpha: 0.95 },
+        { sharpness: 0.25, maxAlpha: 0.85 },
+        { sharpness: 0.6, maxAlpha: 0.90 },
       ];
 
       for (const { sharpness, maxAlpha } of variations) {
         const canvas = document.createElement("canvas");
-        canvas.width = 32;
-        canvas.height = 32;
+        canvas.width = 64;
+        canvas.height = 64;
         const ctx = canvas.getContext("2d");
         if (ctx) {
-          const gradient = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
+          const gradient = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
           gradient.addColorStop(0, `rgba(255,255,255,${maxAlpha})`);
-          gradient.addColorStop(sharpness * 0.3, `rgba(255,255,255,${maxAlpha * 0.6})`);
-          gradient.addColorStop(sharpness * 0.7, `rgba(255,255,255,${maxAlpha * 0.1})`);
+          gradient.addColorStop(sharpness * 0.25, `rgba(200,230,255,${maxAlpha * 0.7})`);
+          gradient.addColorStop(sharpness * 0.6, `rgba(100,200,255,${maxAlpha * 0.2})`);
           gradient.addColorStop(1, "rgba(0,0,0,0)");
           ctx.fillStyle = gradient;
-          ctx.fillRect(0, 0, 32, 32);
+          ctx.fillRect(0, 0, 64, 64);
         }
         textures.push(new THREE.CanvasTexture(canvas));
       }
@@ -83,19 +83,20 @@ export default function ParticleField() {
     // ── ENHANCEMENT 3: Depth Fog Effect ────────────────────────────────────────
     const fogGeometry = new THREE.BufferGeometry();
     const fogMaterial = new THREE.PointsMaterial({
-      color: 0x1a0033,
-      size: 0.02,
+      color: 0x0f3a7d,
+      size: 0.05,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.02,
+      opacity: 0.08,
       depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
-    const fogCount = Math.floor(5000 * particleMultiplier);
+    const fogCount = Math.floor(8000 * particleMultiplier); // Increased for denser atmosphere
     const fogPositions = new Float32Array(fogCount * 3);
     for (let i = 0; i < fogCount; i++) {
-      fogPositions[i * 3]     = (Math.random() - 0.5) * 30;
-      fogPositions[i * 3 + 1] = (Math.random() - 0.5) * 30;
-      fogPositions[i * 3 + 2] = -8 + Math.random() * 5;
+      fogPositions[i * 3]     = (Math.random() - 0.5) * 40;
+      fogPositions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+      fogPositions[i * 3 + 2] = -10 + Math.random() * 8;
     }
     fogGeometry.setAttribute("position", new THREE.BufferAttribute(fogPositions, 3));
     const fogParticles = new THREE.Points(fogGeometry, fogMaterial);
@@ -104,10 +105,11 @@ export default function ParticleField() {
     // ── ENHANCEMENT 4: Line Connection Network ─────────────────────────────────
     const lineGeometry = new THREE.BufferGeometry();
     const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x67e8f9,
+      color: 0x00d4ff,
       transparent: true,
-      opacity: 0.05,
+      opacity: 0.08,
       depthWrite: false,
+      blending: THREE.AdditiveBlending,
     });
     const linesMesh = new THREE.LineSegments(lineGeometry, lineMaterial);
     scene.add(linesMesh);
@@ -146,9 +148,9 @@ export default function ParticleField() {
         particles.push({
           position: new THREE.Vector3(x, y, z),
           velocity: new THREE.Vector3(
-            (Math.random() - 0.5) * 0.02,
-            (Math.random() - 0.5) * 0.02,
-            (Math.random() - 0.5) * 0.01
+            (Math.random() - 0.5) * 0.008,
+            (Math.random() - 0.5) * 0.008,
+            (Math.random() - 0.5) * 0.004
           ),
           twinkleFactor: Math.random(),
           driftOffset: new THREE.Vector3(
@@ -168,26 +170,27 @@ export default function ParticleField() {
         map: glowTextures[textureIndex % glowTextures.length],
         sizeAttenuation: true,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.70,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
+        fog: false,
       });
 
       const points = new THREE.Points(geometry, material);
       return { points, particles, positions, originalPositions };
     };
 
-    // Far — tiny lavender stars (enhanced colors)
-    const far  = createLayer(Math.floor(2000 * particleMultiplier), 22, 0.045, [-6, -3], 0.75, 0.8, 0.75, 0);
-    // Mid — cyan tint (enhanced colors)
-    const mid  = createLayer(Math.floor(1000 * particleMultiplier), 16, 0.075, [-3,  0], 0.55, 0.9, 0.60, 1);
-    // Near — bright purple (enhanced colors)
-    const near = createLayer(Math.floor(500 * particleMultiplier), 11, 0.140, [ 0,  2], 0.80, 0.85, 0.65, 2);
+    // Far — tiny cyan stars (cool soothing color)
+    const far  = createLayer(Math.floor(2500 * particleMultiplier), 24, 0.055, [-6, -3], 0.55, 0.95, 0.70, 0);
+    // Mid — deep blue-cyan (very soothing)
+    const mid  = createLayer(Math.floor(1200 * particleMultiplier), 18, 0.095, [-3,  0], 0.50, 0.90, 0.65, 1);
+    // Near — bright cyan-blue (cool and aesthetic)
+    const near = createLayer(Math.floor(600 * particleMultiplier), 13, 0.160, [ 0,  2], 0.52, 0.88, 0.72, 2);
 
     scene.add(far.points, mid.points, near.points);
 
-    // ── ENHANCEMENT 2: Particle Responsiveness ─────────────────────────────────
-    const mouseInfluenceRadius = 2;
+    // ── ENHANCEMENT 2: Particle Responsiveness (Gentle) ───────────────────────
+    const mouseInfluenceRadius = 2.5;
     const updateParticleResponsiveness = (layer: ReturnType<typeof createLayer>, mouseStrength: number) => {
       const positions = layer.positions;
       const originals = layer.originalPositions;
@@ -202,18 +205,18 @@ export default function ParticleField() {
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         if (dist < mouseInfluenceRadius) {
-          // Repel from cursor
-          const force = (1 - dist / mouseInfluenceRadius) * 0.05 * mouseStrength;
+          // Gentle repel from cursor (reduced intensity for soothing effect)
+          const force = (1 - dist / mouseInfluenceRadius) * 0.025 * mouseStrength;
           particle.position.x += (dx / dist || 0) * force;
           particle.position.y += (dy / dist || 0) * force;
         }
 
-        // ENHANCEMENT 3: Drift motion with sine waves
-        const driftTime = performance.now() * 0.0005;
+        // ENHANCEMENT 3: Drift motion with sine waves (slower for soothing)
+        const driftTime = performance.now() * 0.0003; // Reduced speed
         const drift = {
-          x: Math.sin(driftTime * 0.5 + particle.driftOffset.x) * 0.02,
-          y: Math.cos(driftTime * 0.3 + particle.driftOffset.y) * 0.015,
-          z: Math.sin(driftTime * 0.4 + particle.driftOffset.z) * 0.01,
+          x: Math.sin(driftTime * 0.4 + particle.driftOffset.x) * 0.025,
+          y: Math.cos(driftTime * 0.25 + particle.driftOffset.y) * 0.020,
+          z: Math.sin(driftTime * 0.3 + particle.driftOffset.z) * 0.012,
         };
 
         // ENHANCEMENT 3: Velocity trails (subtle movement)
@@ -277,53 +280,53 @@ export default function ParticleField() {
       // Calculate fade-in progress (0 to 1 over 3 seconds)
       const fadeInProgress = Math.min(t / fadeInDuration, 1);
 
-      // Mouse movement strength for responsiveness
-      const mouseStrength = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy) * 10;
+      // Mouse movement strength for responsiveness (reduced for calmness)
+      const mouseStrength = Math.sqrt(mouse.vx * mouse.vx + mouse.vy * mouse.vy) * 5;
 
       // ENHANCEMENT 2: Update particle responsiveness
-      updateParticleResponsiveness(far, mouseStrength * 0.3);
-      updateParticleResponsiveness(mid, mouseStrength * 0.5);
-      updateParticleResponsiveness(near, mouseStrength * 0.7);
+      updateParticleResponsiveness(far, mouseStrength * 0.25);
+      updateParticleResponsiveness(mid, mouseStrength * 0.40);
+      updateParticleResponsiveness(near, mouseStrength * 0.55);
 
       // ENHANCEMENT 4: Update line connections
       updateLineConnections();
 
-      // Each layer parallaxes at a different rate
-      far.points.rotation.y  = t * 0.040 + mouse.x * 0.20;
-      far.points.rotation.x  =             mouse.y * 0.15;
-      mid.points.rotation.y  = t * 0.065 + mouse.x * 0.35;
-      mid.points.rotation.x  =             mouse.y * 0.25;
-      near.points.rotation.y = t * 0.100 + mouse.x * 0.50;
-      near.points.rotation.x =             mouse.y * 0.35;
+      // Each layer parallaxes at a different rate (slowed down for aesthetic)
+      far.points.rotation.y  = t * 0.025 + mouse.x * 0.12;
+      far.points.rotation.x  =             mouse.y * 0.10;
+      mid.points.rotation.y  = t * 0.040 + mouse.x * 0.25;
+      mid.points.rotation.x  =             mouse.y * 0.18;
+      near.points.rotation.y = t * 0.065 + mouse.x * 0.38;
+      near.points.rotation.x =             mouse.y * 0.28;
 
       // ENHANCEMENT 6: Advanced animations - Breathing waves with smooth fade-in
-      const breathingWave = Math.sin(t * 0.4) * 0.5 + 0.5;
+      const breathingWave = Math.sin(t * 0.3) * 0.5 + 0.5;
       
-      // Apply fade-in and breathing to opacity
-      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.55 + 0.20 * Math.sin(t * 0.6) + breathingWave * 0.12);
-      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.65 + 0.15 * Math.sin(t * 0.8 + 1) + breathingWave * 0.08);
-      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.75 + 0.08 * Math.sin(t * 1.0 + 2) + breathingWave * 0.06);
+      // Apply fade-in and breathing to opacity (more subtle and soothing)
+      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.50 + 0.18 * Math.sin(t * 0.5) + breathingWave * 0.10);
+      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.62 + 0.12 * Math.sin(t * 0.6 + 1) + breathingWave * 0.08);
+      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.72 + 0.10 * Math.sin(t * 0.7 + 2) + breathingWave * 0.06);
 
       // ENHANCEMENT 6: Color bloom effect (subtle hue rotation)
-      const hueShift = Math.sin(t * 0.2) * 0.02;
-      (far.points.material as THREE.PointsMaterial).color.setHSL(0.75 + hueShift, 0.8, 0.75);
-      (mid.points.material as THREE.PointsMaterial).color.setHSL(0.55 + hueShift, 0.9, 0.60);
-      (near.points.material as THREE.PointsMaterial).color.setHSL(0.80 + hueShift, 0.85, 0.65);
+      const hueShift = Math.sin(t * 0.15) * 0.015;
+      (far.points.material as THREE.PointsMaterial).color.setHSL(0.55 + hueShift, 0.95, 0.70);
+      (mid.points.material as THREE.PointsMaterial).color.setHSL(0.50 + hueShift, 0.90, 0.65);
+      (near.points.material as THREE.PointsMaterial).color.setHSL(0.52 + hueShift, 0.88, 0.72);
 
       // Update fog particles opacity for fade-in effect
-      (fogMaterial).opacity = fadeInProgress * 0.02;
+      (fogMaterial).opacity = fadeInProgress * 0.08;
 
       // Update fog particles position for depth effect
       const fogPos = fogGeometry.attributes.position as THREE.BufferAttribute;
       const fogArray = fogPos.array as Float32Array;
       for (let i = 0; i < fogArray.length; i += 3) {
-        fogArray[i + 2] += 0.001;
-        if (fogArray[i + 2] > -3) fogArray[i + 2] = -8;
+        fogArray[i + 2] += 0.0005; // Slower fog movement
+        if (fogArray[i + 2] > -2) fogArray[i + 2] = -10;
       }
       fogPos.needsUpdate = true;
 
       // Update line material opacity for fade-in effect
-      (lineMaterial).opacity = fadeInProgress * 0.05;
+      (lineMaterial).opacity = fadeInProgress * 0.08;
 
       renderer.render(scene, camera);
     };
