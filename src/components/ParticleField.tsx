@@ -84,18 +84,18 @@ export default function ParticleField() {
     const fogGeometry = new THREE.BufferGeometry();
     const fogMaterial = new THREE.PointsMaterial({
       color: 0x0f3a7d,
-      size: 0.05,
+      size: 0.08,
       sizeAttenuation: true,
       transparent: true,
-      opacity: 0.08,
+      opacity: 0.12,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
     });
-    const fogCount = Math.floor(8000 * particleMultiplier); // Increased for denser atmosphere
+    const fogCount = Math.floor(12000 * particleMultiplier);
     const fogPositions = new Float32Array(fogCount * 3);
     for (let i = 0; i < fogCount; i++) {
-      fogPositions[i * 3]     = (Math.random() - 0.5) * 40;
-      fogPositions[i * 3 + 1] = (Math.random() - 0.5) * 40;
+      fogPositions[i * 3]     = (Math.random() - 0.5) * 60;
+      fogPositions[i * 3 + 1] = (Math.random() - 0.5) * 60;
       fogPositions[i * 3 + 2] = -10 + Math.random() * 8;
     }
     fogGeometry.setAttribute("position", new THREE.BufferAttribute(fogPositions, 3));
@@ -181,11 +181,11 @@ export default function ParticleField() {
     };
 
     // Far — tiny cyan stars (cool soothing color) — extended spread for full page coverage
-    const far  = createLayer(Math.floor(3500 * particleMultiplier), 48, 0.055, [-6, -3], 0.55, 0.95, 0.70, 0);
+    const far  = createLayer(Math.floor(4500 * particleMultiplier), 80, 0.055, [-6, -3], 0.55, 0.95, 0.70, 0);
     // Mid — deep blue-cyan (very soothing) — extended spread for full page coverage
-    const mid  = createLayer(Math.floor(2000 * particleMultiplier), 36, 0.095, [-3,  0], 0.50, 0.90, 0.65, 1);
+    const mid  = createLayer(Math.floor(3000 * particleMultiplier), 64, 0.095, [-3,  0], 0.50, 0.90, 0.65, 1);
     // Near — bright cyan-blue (cool and aesthetic) — extended spread for full page coverage
-    const near = createLayer(Math.floor(1200 * particleMultiplier), 26, 0.160, [ 0,  2], 0.52, 0.88, 0.72, 2);
+    const near = createLayer(Math.floor(1800 * particleMultiplier), 48, 0.160, [ 0,  2], 0.52, 0.88, 0.72, 2);
 
     scene.add(far.points, mid.points, near.points);
 
@@ -302,10 +302,10 @@ export default function ParticleField() {
       // ENHANCEMENT 6: Advanced animations - Breathing waves with smooth fade-in
       const breathingWave = Math.sin(t * 0.3) * 0.5 + 0.5;
       
-      // Apply fade-in and breathing to opacity (more subtle and soothing) — increased opacity for better visibility
-      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.60 + 0.20 * Math.sin(t * 0.5) + breathingWave * 0.12);
-      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.70 + 0.15 * Math.sin(t * 0.6 + 1) + breathingWave * 0.10);
-      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.80 + 0.12 * Math.sin(t * 0.7 + 2) + breathingWave * 0.08);
+      // Apply fade-in and breathing to opacity — BOOSTED for full page visibility
+      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.75 + 0.25 * Math.sin(t * 0.5) + breathingWave * 0.15);
+      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.85 + 0.20 * Math.sin(t * 0.6 + 1) + breathingWave * 0.12);
+      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.90 + 0.18 * Math.sin(t * 0.7 + 2) + breathingWave * 0.10);
 
       // ENHANCEMENT 6: Color bloom effect (subtle hue rotation)
       const hueShift = Math.sin(t * 0.15) * 0.015;
@@ -314,7 +314,7 @@ export default function ParticleField() {
       (near.points.material as THREE.PointsMaterial).color.setHSL(0.52 + hueShift, 0.88, 0.72);
 
       // Update fog particles opacity for fade-in effect
-      (fogMaterial).opacity = fadeInProgress * 0.08;
+      (fogMaterial).opacity = fadeInProgress * 0.12;
 
       // Update fog particles position for depth effect
       const fogPos = fogGeometry.attributes.position as THREE.BufferAttribute;
