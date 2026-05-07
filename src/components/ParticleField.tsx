@@ -170,7 +170,7 @@ export default function ParticleField() {
         map: glowTextures[textureIndex % glowTextures.length],
         sizeAttenuation: true,
         transparent: true,
-        opacity: 0.70,
+        opacity: 0.85,
         depthWrite: false,
         blending: THREE.AdditiveBlending,
         fog: false,
@@ -180,12 +180,12 @@ export default function ParticleField() {
       return { points, particles, positions, originalPositions };
     };
 
-    // Far — tiny cyan stars (cool soothing color)
-    const far  = createLayer(Math.floor(2500 * particleMultiplier), 24, 0.055, [-6, -3], 0.55, 0.95, 0.70, 0);
-    // Mid — deep blue-cyan (very soothing)
-    const mid  = createLayer(Math.floor(1200 * particleMultiplier), 18, 0.095, [-3,  0], 0.50, 0.90, 0.65, 1);
-    // Near — bright cyan-blue (cool and aesthetic)
-    const near = createLayer(Math.floor(600 * particleMultiplier), 13, 0.160, [ 0,  2], 0.52, 0.88, 0.72, 2);
+    // Far — tiny cyan stars (cool soothing color) — extended spread for full page coverage
+    const far  = createLayer(Math.floor(3500 * particleMultiplier), 48, 0.055, [-6, -3], 0.55, 0.95, 0.70, 0);
+    // Mid — deep blue-cyan (very soothing) — extended spread for full page coverage
+    const mid  = createLayer(Math.floor(2000 * particleMultiplier), 36, 0.095, [-3,  0], 0.50, 0.90, 0.65, 1);
+    // Near — bright cyan-blue (cool and aesthetic) — extended spread for full page coverage
+    const near = createLayer(Math.floor(1200 * particleMultiplier), 26, 0.160, [ 0,  2], 0.52, 0.88, 0.72, 2);
 
     scene.add(far.points, mid.points, near.points);
 
@@ -302,10 +302,10 @@ export default function ParticleField() {
       // ENHANCEMENT 6: Advanced animations - Breathing waves with smooth fade-in
       const breathingWave = Math.sin(t * 0.3) * 0.5 + 0.5;
       
-      // Apply fade-in and breathing to opacity (more subtle and soothing)
-      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.50 + 0.18 * Math.sin(t * 0.5) + breathingWave * 0.10);
-      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.62 + 0.12 * Math.sin(t * 0.6 + 1) + breathingWave * 0.08);
-      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.72 + 0.10 * Math.sin(t * 0.7 + 2) + breathingWave * 0.06);
+      // Apply fade-in and breathing to opacity (more subtle and soothing) — increased opacity for better visibility
+      (far.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.60 + 0.20 * Math.sin(t * 0.5) + breathingWave * 0.12);
+      (mid.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.70 + 0.15 * Math.sin(t * 0.6 + 1) + breathingWave * 0.10);
+      (near.points.material as THREE.PointsMaterial).opacity = fadeInProgress * (0.80 + 0.12 * Math.sin(t * 0.7 + 2) + breathingWave * 0.08);
 
       // ENHANCEMENT 6: Color bloom effect (subtle hue rotation)
       const hueShift = Math.sin(t * 0.15) * 0.015;

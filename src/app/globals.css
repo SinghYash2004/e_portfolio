@@ -570,13 +570,18 @@ hr.divider {
   justify-content: center;
   gap: 1rem;
   padding: 2rem 0.75rem;
-  background: rgba(15, 17, 21, 0.5);
+  background: rgba(15, 17, 21, 0.7);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   width: auto;
   max-width: none;
   transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(99, 102, 241, 0.1);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 /* ── MOBILE BOTTOM NAV ── */
@@ -659,9 +664,11 @@ hr.divider {
 }
 
 .nav-scrolled {
-  background: rgba(15, 17, 21, 0.8);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(15, 17, 21, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), 0 0 30px rgba(99, 102, 241, 0.2);
+  border-color: rgba(99, 102, 241, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .nav-links {
