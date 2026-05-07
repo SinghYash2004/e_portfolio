@@ -581,8 +581,6 @@ hr.divider {
   opacity: 1 !important;
   visibility: visible !important;
   pointer-events: auto !important;
-  max-height: calc(100vh - 4rem);
-  overflow-y: auto;
 }
 
 /* ── MOBILE BOTTOM NAV ── */
