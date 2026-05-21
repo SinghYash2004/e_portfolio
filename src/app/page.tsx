@@ -135,9 +135,11 @@ export default function Home() {
             className="text-muted text-lg animate-sophisticated delay-2 hero-lead depth-1 animate-hero-stagger-3"
             style={{ maxWidth: "600px" }}
           >
-            B.Tech Computer Science student with a working knowledge of programming and software
-            development. Passionate about learning new technologies and applying them to develop
-            efficient software solutions.
+            Computer Science undergraduate with a consistent 10 CGPA across two years of
+            engineering and a strong interest in programming, algorithms, and software development.
+            Driven by curiosity and a fundamentals-first approach to learning, I enjoy solving
+            problems, exploring new technologies, and building efficient software systems that
+            combine logic, scalability, and practical impact.
           </p>
 
           <div className="contact-links mt-8 animate-sophisticated delay-3 depth-1">
