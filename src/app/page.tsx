@@ -144,10 +144,10 @@ export default function Home() {
 
           <div className="contact-links mt-8 animate-sophisticated delay-3 depth-1">
             <MagneticLink
-              href="mailto:ys6463@srmist.edu.in"
+              href="mailto:yashpsingh28@gmail.com"
               className="contact-link badge hover:scale-105 transition-transform duration-300"
             >
-              <MdMail size={16} /> ys6463@srmist.edu.in
+              <MdMail size={16} /> yashpsingh28@gmail.com
             </MagneticLink>
             <span className="contact-link badge hover:scale-105 transition-transform duration-300">
               <FiPhone size={16} /> +91-7061293059
@@ -345,7 +345,7 @@ export default function Home() {
             <ul className="footer-links">
               <li><a href="https://github.com/SinghYash2004" target="_blank" rel="noreferrer" className="text-muted hover:text-white transition">GitHub</a></li>
               <li><a href="https://linkedin.com/in/yash-pratap-singh-b43925327/" target="_blank" rel="noreferrer" className="text-muted hover:text-white transition">LinkedIn</a></li>
-              <li><a href="mailto:ys6463@srmist.edu.in" className="text-muted hover:text-white transition">Email</a></li>
+              <li><a href="mailto:yashpsingh28@gmail.com" className="text-muted hover:text-white transition">Email</a></li>
             </ul>
           </div>
 

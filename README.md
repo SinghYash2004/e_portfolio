@@ -283,7 +283,7 @@ CSE Engineering Student at SRMIST
 
 - 💼 [LinkedIn](https://linkedin.com/in/yash-pratap-singh-b43925327/)
 - 🐙 [GitHub](https://github.com/your-username)
-- 📧 Email: your.email@example.com
+- 📧 Email: yashpsingh28@gmail.com
 
 ---
 

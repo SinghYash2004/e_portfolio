@@ -42,9 +42,9 @@ export default function ContactForm() {
         setStatus("error");
         setMessage("Failed to send message. Please try again.");
       }
-    } catch (error) {
+    } catch {
       setStatus("error");
-      setMessage("Error sending message. Please contact me directly at ys6463@srmist.edu.in");
+      setMessage("Error sending message. Please contact me directly at yashpsingh28@gmail.com");
     }
   };
 
@@ -83,7 +83,7 @@ export default function ContactForm() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                placeholder="your.email@example.com"
+                placeholder="yashpsingh28@gmail.com"
                 className="form-input"
               />
             </div>
@@ -147,11 +147,11 @@ export default function ContactForm() {
             <p className="text-muted mb-6">Feel free to contact me through any of these channels:</p>
             
             <div className="contact-methods">
-              <a href="mailto:ys6463@srmist.edu.in" className="contact-method-link badge">
+              <a href="mailto:yashpsingh28@gmail.com" className="contact-method-link badge">
                 <MdMail size={18} />
                 <div>
                   <div className="font-semibold">Email</div>
-                  <div className="text-sm text-muted">ys6463@srmist.edu.in</div>
+                  <div className="text-sm text-muted">yashpsingh28@gmail.com</div>
                 </div>
               </a>
 
