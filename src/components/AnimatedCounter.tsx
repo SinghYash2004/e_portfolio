@@ -10,7 +10,6 @@ interface AnimatedCounterProps {
   prefix?: string;
 }
 
-
 export default function AnimatedCounter({
   end,
   duration = 2000,
